@@ -46,6 +46,11 @@ function extractSessionId(url: string): string | null {
   return match ? match[1] : null;
 }
 
+function scanForBpsId(html: string): string | null {
+  const match = /bps_[A-Za-z0-9]+/.exec(html);
+  return match ? match[0] : null;
+}
+
 export async function step1AccessPortalLink(url: string): Promise<Step1Result> {
   const response = await fetch(url, {
     method: "GET",
@@ -59,7 +64,8 @@ export async function step1AccessPortalLink(url: string): Promise<Step1Result> {
     );
   }
 
-  const html = parse(await response.text());
+  const rawHtml = await response.text();
+  const html = parse(rawHtml);
 
   const tinyPreloaded = parseJsonScript(html, "tiny_preloaded_json");
   const preloaded = parseJsonScript(html, "preloaded_json");
@@ -88,7 +94,15 @@ export async function step1AccessPortalLink(url: string): Promise<Step1Result> {
     typeof preloaded?.livemode === "boolean" ? preloaded.livemode : null;
 
   const finalUrl = response.url || url;
-  const sessionId = extractSessionId(finalUrl) ?? extractSessionId(url);
+
+  const bpsSessionId =
+    (preloaded?.portal_session_id as string | undefined) ??
+    scanForBpsId(rawHtml);
+
+  const sessionId =
+    bpsSessionId ??
+    extractSessionId(finalUrl) ??
+    extractSessionId(url);
 
   return {
     authorization: authorization ? `Bearer ${authorization}` : null,
