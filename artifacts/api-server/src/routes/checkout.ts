@@ -1,5 +1,4 @@
 import { Router, type IRouter, type Request, type Response } from "express";
-import { processarPagamento } from "@workspace/stripe-checkout";
 
 const router: IRouter = Router();
 
@@ -37,7 +36,12 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
 
   try {
     req.log.info({ url: link.split("#")[0] }, "Iniciando processamento de checkout");
+
+    // Import dinâmico — o módulo é ESM puro sem tipos TypeScript
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { processarPagamento } = (await import("@workspace/stripe-checkout")) as any;
     const resultado = await processarPagamento(link, DADOS_PAGAMENTO);
+
     req.log.info({ status: resultado.status, sucesso: resultado.sucesso }, "Checkout concluído");
     res.json(resultado);
   } catch (err) {
