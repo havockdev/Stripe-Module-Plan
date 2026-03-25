@@ -442,6 +442,12 @@ importers:
         specifier: ^0.31.9
         version: 0.31.9
 
+  lib/stripe-billing:
+    dependencies:
+      node-html-parser:
+        specifier: ^7.1.0
+        version: 7.1.0
+
   scripts:
     devDependencies:
       '@types/node':
