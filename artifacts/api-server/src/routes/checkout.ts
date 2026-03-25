@@ -4,8 +4,7 @@ import type { OpcoesPagamento, ResultadoPagamento } from "@workspace/stripe-chec
 
 const router: IRouter = Router();
 
-// Lista de cartões — tenta em ordem até um funcionar.
-// Adicione novos cartões aqui conforme necessário.
+// Lista de cartões — adicione novos conforme necessário.
 const CARTOES: OpcoesPagamento["cartao"][] = [
   { numero: "5226261200293012", cvv: "237", mesVencimento: "03", anoVencimento: "34" },
   { numero: "5226269772380877", cvv: "922", mesVencimento: "03", anoVencimento: "34" },
@@ -23,6 +22,10 @@ const DADOS_BASE = {
     cep: "79042-470",
   },
 };
+
+// Índice do cartão atual — persiste entre requisições em memória.
+// Só avança quando o pagamento falha; fica no mesmo se der sucesso.
+let indiceCartaoAtual = 0;
 
 type StatusJob = "processando" | "concluido" | "erro";
 
@@ -46,7 +49,7 @@ setInterval(() => {
 /**
  * POST /api/checkout/processar
  * Inicia o processamento de pagamento em segundo plano e retorna um jobId imediatamente.
- * Tenta cada cartão da lista em ordem até obter status 'paid'.
+ * Usa o cartão do índice atual. Se falhar, avança o índice para o próximo (circular).
  * Body: { link: string }
  */
 router.post("/checkout/processar", async (req: Request, res: Response) => {
@@ -73,41 +76,36 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
   const jobId = randomUUID();
   jobs.set(jobId, { status: "processando", resultado: null, criadoEm: Date.now() });
 
-  req.log.info({ jobId, url: link.split("#")[0] }, "Job de checkout criado");
+  // Captura o índice e o cartão no momento da requisição
+  const indiceUsado = indiceCartaoAtual;
+  const cartao = CARTOES[indiceUsado];
+
+  req.log.info(
+    { jobId, url: link.split("#")[0], cartaoFinal: cartao.numero.slice(-4), indice: indiceUsado },
+    `Job de checkout criado — usando cartão ...${cartao.numero.slice(-4)} (índice ${indiceUsado})`
+  );
+
+  res.status(202).json({ jobId });
 
   // Inicia o processamento em segundo plano (não aguarda aqui)
   (async () => {
     try {
       const { processarPagamento } = await import("@workspace/stripe-checkout");
 
-      let resultado: ResultadoPagamento = {
-        sucesso: false,
-        status: "error",
-        mensagem: "Nenhum cartão disponível para processar.",
-      };
+      const resultado = await processarPagamento(link, { ...DADOS_BASE, cartao });
 
-      for (let i = 0; i < CARTOES.length; i++) {
-        const cartao = CARTOES[i];
-        const tentativa = i + 1;
-
-        req.log.info(
-          { jobId, tentativa, totalCartoes: CARTOES.length, cartaoFinal: cartao.numero.slice(-4) },
-          `Tentando cartão ${tentativa}/${CARTOES.length} (final: ...${cartao.numero.slice(-4)})`
-        );
-
-        resultado = await processarPagamento(link, { ...DADOS_BASE, cartao });
-
-        if (resultado.status === "paid") {
-          req.log.info(
-            { jobId, tentativa, cartaoFinal: cartao.numero.slice(-4) },
-            `Pagamento aprovado com cartão ${tentativa} (...${cartao.numero.slice(-4)})`
-          );
-          break;
-        }
-
+      if (resultado.status !== "paid") {
+        // Falhou — avança para o próximo cartão (circular)
+        const proximoIndice = (indiceUsado + 1) % CARTOES.length;
+        indiceCartaoAtual = proximoIndice;
         req.log.warn(
-          { jobId, tentativa, status: resultado.status, mensagem: resultado.mensagem },
-          `Cartão ${tentativa} falhou (${resultado.status}) — tentando próximo...`
+          { jobId, status: resultado.status, indiceUsado, proximoIndice, cartaoFinal: cartao.numero.slice(-4) },
+          `Cartão ...${cartao.numero.slice(-4)} falhou (${resultado.status}) — próxima requisição usará índice ${proximoIndice} (...${CARTOES[proximoIndice].numero.slice(-4)})`
+        );
+      } else {
+        req.log.info(
+          { jobId, indiceUsado, cartaoFinal: cartao.numero.slice(-4) },
+          `Pagamento aprovado com cartão ...${cartao.numero.slice(-4)} — índice mantido em ${indiceUsado}`
         );
       }
 
@@ -116,6 +114,15 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
     } catch (err) {
       const mensagem = err instanceof Error ? err.message : String(err);
       req.log.error({ jobId, err }, "Erro no job de checkout");
+
+      // Erro inesperado também avança o cartão
+      const proximoIndice = (indiceUsado + 1) % CARTOES.length;
+      indiceCartaoAtual = proximoIndice;
+      req.log.warn(
+        { jobId, indiceUsado, proximoIndice },
+        `Erro inesperado — próxima requisição usará índice ${proximoIndice}`
+      );
+
       jobs.set(jobId, {
         status: "concluido",
         resultado: { sucesso: false, status: "error", mensagem },
@@ -123,8 +130,6 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
       });
     }
   })();
-
-  res.status(202).json({ jobId });
 });
 
 /**
