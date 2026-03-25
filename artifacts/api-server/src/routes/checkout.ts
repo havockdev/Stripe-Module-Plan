@@ -24,11 +24,80 @@ const DADOS_BASE = {
   },
 };
 
-// Índice do cartão atual — persiste entre requisições em memória.
-// Só avança quando o pagamento falha; fica no mesmo se der sucesso.
+// ─── Controle de concorrência e saúde dos cartões ────────────────────────────
+
+// Números dos cartões atualmente com um job em execução (mutex por cartão)
+const cartoesBloqueados = new Set<string>();
+
+// Contagem de erros consecutivos por número de cartão
+const errosConsecutivos = new Map<string, number>();
+
+// Limite de erros consecutivos antes de remover o cartão
+const LIMITE_ERROS = 10;
+
+// Índice preferido para a próxima escolha de cartão (circular)
 let indiceCartaoAtual = 0;
 
-type StatusJob = "processando" | "concluido" | "erro";
+// Aguarda 2s — usado no polling de cartão livre
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Aguarda e retorna o primeiro cartão disponível (não bloqueado), partindo do
+ * índice preferido em ordem circular. Bloqueia indefinidamente enquanto todos
+ * os cartões estiverem ocupados. Retorna null se CARTOES estiver vazio.
+ */
+async function aguardarCartaoLivre(
+  preferido: number
+): Promise<{ cartao: OpcoesPagamento["cartao"]; indice: number } | null> {
+  while (true) {
+    if (CARTOES.length === 0) return null;
+
+    // Percorre a lista de forma circular a partir do índice preferido
+    const inicio = preferido % CARTOES.length;
+    for (let offset = 0; offset < CARTOES.length; offset++) {
+      const indice = (inicio + offset) % CARTOES.length;
+      const cartao = CARTOES[indice];
+      if (!cartoesBloqueados.has(cartao.numero)) {
+        return { cartao, indice };
+      }
+    }
+
+    // Todos ocupados — aguarda e tenta novamente
+    await sleep(2000);
+  }
+}
+
+/**
+ * Registra um erro consecutivo para o cartão. Remove o cartão da lista se
+ * atingir o limite. Retorna true se o cartão foi removido.
+ */
+function registrarErroCartao(numero: string): boolean {
+  const atual = (errosConsecutivos.get(numero) ?? 0) + 1;
+  errosConsecutivos.set(numero, atual);
+
+  if (atual >= LIMITE_ERROS) {
+    const indiceRemovido = CARTOES.findIndex((c) => c.numero === numero);
+    if (indiceRemovido !== -1) {
+      CARTOES.splice(indiceRemovido, 1);
+      errosConsecutivos.delete(numero);
+
+      // Ajusta o índice atual para não ultrapassar o tamanho da lista
+      if (CARTOES.length > 0) {
+        indiceCartaoAtual = indiceCartaoAtual % CARTOES.length;
+      } else {
+        indiceCartaoAtual = 0;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
+// ─── Jobs ─────────────────────────────────────────────────────────────────────
+
+type StatusJob = "processando" | "concluido";
 
 interface Job {
   status: StatusJob;
@@ -47,10 +116,19 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000);
 
+// ─── Rotas ────────────────────────────────────────────────────────────────────
+
 /**
  * POST /api/checkout/processar
  * Inicia o processamento de pagamento em segundo plano e retorna um jobId imediatamente.
- * Usa o cartão do índice atual. Se falhar, avança o índice para o próximo (circular).
+ *
+ * Comportamento do cartão:
+ *  - Usa o cartão preferido (indiceCartaoAtual); se estiver ocupado, aguarda ou usa outro livre.
+ *  - Máximo 1 job por cartão ao mesmo tempo (mutex).
+ *  - Sucesso: mantém o cartão atual e zera o contador de erros.
+ *  - Falha: avança para o próximo cartão e incrementa o contador de erros.
+ *  - 10 erros consecutivos: remove o cartão da lista permanentemente.
+ *
  * Body: { link: string }
  */
 router.post("/checkout/processar", async (req: Request, res: Response) => {
@@ -74,62 +152,113 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
     return;
   }
 
+  if (CARTOES.length === 0) {
+    res.status(503).json({
+      sucesso: false,
+      status: "error",
+      mensagem: "Nenhum cartão disponível — todos foram removidos por excesso de erros",
+    });
+    return;
+  }
+
   const jobId = randomUUID();
   jobs.set(jobId, { status: "processando", resultado: null, criadoEm: Date.now() });
 
-  // Captura o índice e o cartão no momento da requisição
-  const indiceUsado = indiceCartaoAtual;
-  const cartao = CARTOES[indiceUsado];
-
   req.log.info(
-    { jobId, url: link.split("#")[0], cartaoFinal: cartao.numero.slice(-4), indice: indiceUsado },
-    `Job de checkout criado — usando cartão ...${cartao.numero.slice(-4)} (índice ${indiceUsado})`
+    { jobId, url: link.split("#")[0], cartoesBloqueados: [...cartoesBloqueados], totalCartoes: CARTOES.length },
+    "Job de checkout criado — aguardando cartão livre"
   );
 
   res.status(202).json({ jobId });
 
-  // Inicia o processamento em segundo plano (não aguarda aqui)
+  // Processamento em segundo plano
   (async () => {
-    try {
-      const { processarPagamento } = await import("@workspace/stripe-checkout");
+    // ── 1. Aguarda um cartão livre ──────────────────────────────────────────
+    const obtido = await aguardarCartaoLivre(indiceCartaoAtual);
 
-      const resultado = await processarPagamento(link, { ...DADOS_BASE, cartao });
-
-      if (resultado.status !== "paid") {
-        // Falhou — avança para o próximo cartão (circular)
-        const proximoIndice = (indiceUsado + 1) % CARTOES.length;
-        indiceCartaoAtual = proximoIndice;
-        req.log.warn(
-          { jobId, status: resultado.status, indiceUsado, proximoIndice, cartaoFinal: cartao.numero.slice(-4) },
-          `Cartão ...${cartao.numero.slice(-4)} falhou (${resultado.status}) — próxima requisição usará índice ${proximoIndice} (...${CARTOES[proximoIndice].numero.slice(-4)})`
-        );
-      } else {
-        req.log.info(
-          { jobId, indiceUsado, cartaoFinal: cartao.numero.slice(-4) },
-          `Pagamento aprovado com cartão ...${cartao.numero.slice(-4)} — índice mantido em ${indiceUsado}`
-        );
-      }
-
-      jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
-      req.log.info({ jobId, status: resultado.status }, "Job de checkout concluído");
-    } catch (err) {
-      const mensagem = err instanceof Error ? err.message : String(err);
-      req.log.error({ jobId, err }, "Erro no job de checkout");
-
-      // Erro inesperado também avança o cartão
-      const proximoIndice = (indiceUsado + 1) % CARTOES.length;
-      indiceCartaoAtual = proximoIndice;
-      req.log.warn(
-        { jobId, indiceUsado, proximoIndice },
-        `Erro inesperado — próxima requisição usará índice ${proximoIndice}`
-      );
-
+    if (!obtido) {
+      req.log.error({ jobId }, "Nenhum cartão disponível após espera");
       jobs.set(jobId, {
         status: "concluido",
-        resultado: { sucesso: false, status: "error", mensagem },
+        resultado: {
+          sucesso: false,
+          status: "error",
+          mensagem: "Nenhum cartão disponível — todos foram removidos por excesso de erros",
+        },
         criadoEm: Date.now(),
       });
+      return;
     }
+
+    const { cartao, indice: indiceUsado } = obtido;
+
+    // ── 2. Bloqueia o cartão (mutex) ────────────────────────────────────────
+    cartoesBloqueados.add(cartao.numero);
+
+    req.log.info(
+      { jobId, cartaoFinal: cartao.numero.slice(-4), indiceUsado, cartoesBloqueados: [...cartoesBloqueados] },
+      `Cartão ...${cartao.numero.slice(-4)} adquirido — iniciando pagamento`
+    );
+
+    let resultado: ResultadoPagamento;
+
+    try {
+      const { processarPagamento } = await import("@workspace/stripe-checkout");
+      resultado = await processarPagamento(link, { ...DADOS_BASE, cartao });
+    } catch (err) {
+      const mensagem = err instanceof Error ? err.message : String(err);
+      req.log.error({ jobId, err }, "Erro inesperado durante processarPagamento");
+      resultado = { sucesso: false, status: "error", mensagem };
+    } finally {
+      // ── 3. Libera o mutex sempre ────────────────────────────────────────
+      cartoesBloqueados.delete(cartao.numero);
+    }
+
+    // ── 4. Atualiza estado do cartão com base no resultado ──────────────
+    if (resultado.status === "paid") {
+      errosConsecutivos.set(cartao.numero, 0);
+      // Mantém indiceCartaoAtual no cartão que funcionou
+      indiceCartaoAtual = CARTOES.findIndex((c) => c.numero === cartao.numero);
+      if (indiceCartaoAtual === -1) indiceCartaoAtual = 0;
+
+      req.log.info(
+        { jobId, cartaoFinal: cartao.numero.slice(-4), indiceUsado },
+        `Pagamento aprovado com cartão ...${cartao.numero.slice(-4)} — índice mantido`
+      );
+    } else {
+      const foiRemovido = registrarErroCartao(cartao.numero);
+      const erros = errosConsecutivos.get(cartao.numero) ?? LIMITE_ERROS;
+
+      if (foiRemovido) {
+        req.log.warn(
+          { jobId, cartaoFinal: cartao.numero.slice(-4), status: resultado.status, totalCartoes: CARTOES.length },
+          `Cartão ...${cartao.numero.slice(-4)} removido após ${LIMITE_ERROS} erros consecutivos — restam ${CARTOES.length} cartão(ões)`
+        );
+      } else {
+        // Avança para o próximo cartão circular (baseado no tamanho atual)
+        if (CARTOES.length > 0) {
+          const posAtual = CARTOES.findIndex((c) => c.numero === cartao.numero);
+          indiceCartaoAtual = posAtual !== -1
+            ? (posAtual + 1) % CARTOES.length
+            : indiceCartaoAtual % CARTOES.length;
+        }
+
+        req.log.warn(
+          {
+            jobId,
+            status: resultado.status,
+            cartaoFinal: cartao.numero.slice(-4),
+            errosConsecutivos: erros,
+            proximoIndice: indiceCartaoAtual,
+            proximoCartaoFinal: CARTOES[indiceCartaoAtual]?.numero.slice(-4),
+          },
+          `Cartão ...${cartao.numero.slice(-4)} falhou (${resultado.status}) — erros consecutivos: ${erros}/${LIMITE_ERROS} — próximo: ...${CARTOES[indiceCartaoAtual]?.numero.slice(-4)}`
+        );
+      }
+    }
+
+    jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
+    req.log.info({ jobId, status: resultado.status }, "Job de checkout concluído");
   })();
 });
 
