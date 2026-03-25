@@ -1,0 +1,2626 @@
+<?xml version="1.1"?>
+<!-- NOTE: Any NULL bytes in requests and responses are preserved within this output, even though this strictly breaks the XML syntax. If your XML parser rejects the NULL bytes then you will need to remove or replace these bytes before parsing. Alternatively, you can use the option to base64-encode requests and responses. -->
+<!DOCTYPE items [
+<!ELEMENT items (item*)>
+<!ATTLIST items burpVersion CDATA "">
+<!ATTLIST items exportTime CDATA "">
+<!ELEMENT item (time, url, host, port, protocol, method, path, extension, request, status, responselength, mimetype, response, comment)>
+<!ELEMENT time (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT host (#PCDATA)>
+<!ATTLIST host ip CDATA "">
+<!ELEMENT port (#PCDATA)>
+<!ELEMENT protocol (#PCDATA)>
+<!ELEMENT method (#PCDATA)>
+<!ELEMENT path (#PCDATA)>
+<!ELEMENT extension (#PCDATA)>
+<!ELEMENT request (#PCDATA)>
+<!ATTLIST request base64 (true|false) "false">
+<!ELEMENT status (#PCDATA)>
+<!ELEMENT responselength (#PCDATA)>
+<!ELEMENT mimetype (#PCDATA)>
+<!ELEMENT response (#PCDATA)>
+<!ATTLIST response base64 (true|false) "false">
+<!ELEMENT comment (#PCDATA)>
+]>
+<items burpVersion="2026.2.3" exportTime="Tue Mar 24 15:07:09 GMT-03:00 2026">
+  <item>
+    <time>Tue Mar 24 15:02:03 GMT-03:00 2026</time>
+    <url><![CDATA[https://billing.stripe.com/v1/billing_portal/sessions/bps_1TEZDuKvR4zlUMOU6uHSGY2T?expand%5B%5D=configuration.features.subscription_update.portal_client_products.prices2.currency_options_list&expand%5B%5D=configuration.features.subscription_update.portal_client_products.prices2.tiers&include_only%5B%5D=id%2Cobject%2Ccustomer%2Ccreated_from%2Clivemode%2Creturn_url%2Curl%2Caccent_color%2Cbranding_color%2Cbusiness_name%2Cicon%2Clogo%2Cuse_logo_instead_of_icon%2Csite_key%2Con_behalf_of%2Capplication%2Cis_merchant_default_tax_behavior_set%2Cas_of%2Ccountry_code%2Chas_active_rate_card_subscription%2Cretention_flows_enabled%2Crefund_flows_enabled%2Clegacy_retention_features_active%2Cmerchant_timezone%2Cflow.id%2Cflow.type%2Cconfiguration.active%2Cconfiguration.object%2Cconfiguration.id%2Cconfiguration.is_default%2Cconfiguration.livemode%2Cflow.subscription_update_confirm.subscription%2Cflow.subscription_update.subscription%2Cflow.subscription_cancel.subscription%2Cflow.cancellation_reason.subscription%2Cflow.after_completion.id%2Cflow.after_completion.type%2Cconfiguration.login_page.id%2Cconfiguration.login_page.enabled%2Cconfiguration.login_page.url%2Cconfiguration.business_profile.headline%2Cconfiguration.business_profile.privacy_policy_url%2Cconfiguration.business_profile.terms_of_service_url%2Cconfiguration.custom_text.id%2Cconfiguration.custom_text.subscription_renewal_acknowledgment%2Cconfiguration.custom_text.subscription_update_acknowledgment%2Cconfiguration.custom_text.back_link%2Cflow.after_completion.hosted_confirmation.custom_message%2Cflow.after_completion.redirect.return_url%2Cconfiguration.features.subscription_pause.enabled%2Cconfiguration.features.payment_method_update.enabled%2Cconfiguration.features.invoice_history.enabled%2Cconfiguration.features.customer_update.allowed_updates%2Cconfiguration.features.customer_update.enabled%2Cconfiguration.features.subscription_update.default_allowed_updates%2Cconfiguration.features.subscription_update.enabled%2Cconfiguration.features.subscription_update.proration_behavior%2Cconfiguration.features.subscription_cancel.enabled%2Cconfiguration.features.subscription_cancel.mode%2Cconfiguration.features.subscription_cancel.proration_behavior%2Cflow.subscription_update_confirm.recurring_items.id%2Cflow.subscription_update_confirm.recurring_items.price%2Cflow.subscription_update_confirm.recurring_items.quantity%2Cflow.subscription_update_confirm.recurring_items.deleted%2Cconfiguration.features.subscription_update.packaging.packaging_configuration%2Cflow.subscription_update_confirm.discounts.promotion_code.id%2Cflow.subscription_update_confirm.discounts.promotion_code.code%2Cconfiguration.features.subscription_cancel.cancellation_redirect.enabled%2Cconfiguration.features.subscription_cancel.cancellation_redirect.url%2Cconfiguration.features.subscription_cancel.cancellation_reason.enabled%2Cconfiguration.features.subscription_cancel.cancellation_reason.options%2Cconfiguration.features.subscription_update.portal_client_products.add_on%2Cconfiguration.features.subscription_update.portal_client_products.disable_quantities%2Cconfiguration.features.subscription_update.portal_client_products.min_quantity%2Cconfiguration.features.subscription_update.portal_client_products.max_quantity%2Cconfiguration.features.subscription_update.portal_client_products.product%2Cconfiguration.features.subscription_update.portal_client_products.managed_payments_eligible%2Cflow.subscription_update_confirm.discounts.coupon.id%2Cflow.subscription_update_confirm.discounts.coupon.name%2Cflow.subscription_update_confirm.discounts.coupon.duration%2Cflow.subscription_update_confirm.discounts.coupon.duration_in_months%2Cflow.subscription_update_confirm.discounts.coupon.amount_off%2Cflow.subscription_update_confirm.discounts.coupon.currency%2Cflow.subscription_update_confirm.discounts.coupon.currency_options%2Cflow.subscription_update_confirm.discounts.coupon.percent_off%2Cconfiguration.features.subscription_update.portal_client_products.prices2]]></url>
+    <host ip="3.229.145.172">billing.stripe.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[GET]]></method>
+    <path><![CDATA[/v1/billing_portal/sessions/bps_1TEZDuKvR4zlUMOU6uHSGY2T?expand%5B%5D=configuration.features.subscription_update.portal_client_products.prices2.currency_options_list&expand%5B%5D=configuration.features.subscription_update.portal_client_products.prices2.tiers&include_only%5B%5D=id%2Cobject%2Ccustomer%2Ccreated_from%2Clivemode%2Creturn_url%2Curl%2Caccent_color%2Cbranding_color%2Cbusiness_name%2Cicon%2Clogo%2Cuse_logo_instead_of_icon%2Csite_key%2Con_behalf_of%2Capplication%2Cis_merchant_default_tax_behavior_set%2Cas_of%2Ccountry_code%2Chas_active_rate_card_subscription%2Cretention_flows_enabled%2Crefund_flows_enabled%2Clegacy_retention_features_active%2Cmerchant_timezone%2Cflow.id%2Cflow.type%2Cconfiguration.active%2Cconfiguration.object%2Cconfiguration.id%2Cconfiguration.is_default%2Cconfiguration.livemode%2Cflow.subscription_update_confirm.subscription%2Cflow.subscription_update.subscription%2Cflow.subscription_cancel.subscription%2Cflow.cancellation_reason.subscription%2Cflow.after_completion.id%2Cflow.after_completion.type%2Cconfiguration.login_page.id%2Cconfiguration.login_page.enabled%2Cconfiguration.login_page.url%2Cconfiguration.business_profile.headline%2Cconfiguration.business_profile.privacy_policy_url%2Cconfiguration.business_profile.terms_of_service_url%2Cconfiguration.custom_text.id%2Cconfiguration.custom_text.subscription_renewal_acknowledgment%2Cconfiguration.custom_text.subscription_update_acknowledgment%2Cconfiguration.custom_text.back_link%2Cflow.after_completion.hosted_confirmation.custom_message%2Cflow.after_completion.redirect.return_url%2Cconfiguration.features.subscription_pause.enabled%2Cconfiguration.features.payment_method_update.enabled%2Cconfiguration.features.invoice_history.enabled%2Cconfiguration.features.customer_update.allowed_updates%2Cconfiguration.features.customer_update.enabled%2Cconfiguration.features.subscription_update.default_allowed_updates%2Cconfiguration.features.subscription_update.enabled%2Cconfiguration.features.subscription_update.proration_behavior%2Cconfiguration.features.subscription_cancel.enabled%2Cconfiguration.features.subscription_cancel.mode%2Cconfiguration.features.subscription_cancel.proration_behavior%2Cflow.subscription_update_confirm.recurring_items.id%2Cflow.subscription_update_confirm.recurring_items.price%2Cflow.subscription_update_confirm.recurring_items.quantity%2Cflow.subscription_update_confirm.recurring_items.deleted%2Cconfiguration.features.subscription_update.packaging.packaging_configuration%2Cflow.subscription_update_confirm.discounts.promotion_code.id%2Cflow.subscription_update_confirm.discounts.promotion_code.code%2Cconfiguration.features.subscription_cancel.cancellation_redirect.enabled%2Cconfiguration.features.subscription_cancel.cancellation_redirect.url%2Cconfiguration.features.subscription_cancel.cancellation_reason.enabled%2Cconfiguration.features.subscription_cancel.cancellation_reason.options%2Cconfiguration.features.subscription_update.portal_client_products.add_on%2Cconfiguration.features.subscription_update.portal_client_products.disable_quantities%2Cconfiguration.features.subscription_update.portal_client_products.min_quantity%2Cconfiguration.features.subscription_update.portal_client_products.max_quantity%2Cconfiguration.features.subscription_update.portal_client_products.product%2Cconfiguration.features.subscription_update.portal_client_products.managed_payments_eligible%2Cflow.subscription_update_confirm.discounts.coupon.id%2Cflow.subscription_update_confirm.discounts.coupon.name%2Cflow.subscription_update_confirm.discounts.coupon.duration%2Cflow.subscription_update_confirm.discounts.coupon.duration_in_months%2Cflow.subscription_update_confirm.discounts.coupon.amount_off%2Cflow.subscription_update_confirm.discounts.coupon.currency%2Cflow.subscription_update_confirm.discounts.coupon.currency_options%2Cflow.subscription_update_confirm.discounts.coupon.percent_off%2Cconfiguration.features.subscription_update.portal_client_products.prices2]]></path>
+    <extension>null</extension>
+    <request base64="false"><![CDATA[GET /v1/billing_portal/sessions/bps_1TEZDuKvR4zlUMOU6uHSGY2T?expand%5B%5D=configuration.features.subscription_update.portal_client_products.prices2.currency_options_list&expand%5B%5D=configuration.features.subscription_update.portal_client_products.prices2.tiers&include_only%5B%5D=id%2Cobject%2Ccustomer%2Ccreated_from%2Clivemode%2Creturn_url%2Curl%2Caccent_color%2Cbranding_color%2Cbusiness_name%2Cicon%2Clogo%2Cuse_logo_instead_of_icon%2Csite_key%2Con_behalf_of%2Capplication%2Cis_merchant_default_tax_behavior_set%2Cas_of%2Ccountry_code%2Chas_active_rate_card_subscription%2Cretention_flows_enabled%2Crefund_flows_enabled%2Clegacy_retention_features_active%2Cmerchant_timezone%2Cflow.id%2Cflow.type%2Cconfiguration.active%2Cconfiguration.object%2Cconfiguration.id%2Cconfiguration.is_default%2Cconfiguration.livemode%2Cflow.subscription_update_confirm.subscription%2Cflow.subscription_update.subscription%2Cflow.subscription_cancel.subscription%2Cflow.cancellation_reason.subscription%2Cflow.after_completion.id%2Cflow.after_completion.type%2Cconfiguration.login_page.id%2Cconfiguration.login_page.enabled%2Cconfiguration.login_page.url%2Cconfiguration.business_profile.headline%2Cconfiguration.business_profile.privacy_policy_url%2Cconfiguration.business_profile.terms_of_service_url%2Cconfiguration.custom_text.id%2Cconfiguration.custom_text.subscription_renewal_acknowledgment%2Cconfiguration.custom_text.subscription_update_acknowledgment%2Cconfiguration.custom_text.back_link%2Cflow.after_completion.hosted_confirmation.custom_message%2Cflow.after_completion.redirect.return_url%2Cconfiguration.features.subscription_pause.enabled%2Cconfiguration.features.payment_method_update.enabled%2Cconfiguration.features.invoice_history.enabled%2Cconfiguration.features.customer_update.allowed_updates%2Cconfiguration.features.customer_update.enabled%2Cconfiguration.features.subscription_update.default_allowed_updates%2Cconfiguration.features.subscription_update.enabled%2Cconfiguration.features.subscription_update.proration_behavior%2Cconfiguration.features.subscription_cancel.enabled%2Cconfiguration.features.subscription_cancel.mode%2Cconfiguration.features.subscription_cancel.proration_behavior%2Cflow.subscription_update_confirm.recurring_items.id%2Cflow.subscription_update_confirm.recurring_items.price%2Cflow.subscription_update_confirm.recurring_items.quantity%2Cflow.subscription_update_confirm.recurring_items.deleted%2Cconfiguration.features.subscription_update.packaging.packaging_configuration%2Cflow.subscription_update_confirm.discounts.promotion_code.id%2Cflow.subscription_update_confirm.discounts.promotion_code.code%2Cconfiguration.features.subscription_cancel.cancellation_redirect.enabled%2Cconfiguration.features.subscription_cancel.cancellation_redirect.url%2Cconfiguration.features.subscription_cancel.cancellation_reason.enabled%2Cconfiguration.features.subscription_cancel.cancellation_reason.options%2Cconfiguration.features.subscription_update.portal_client_products.add_on%2Cconfiguration.features.subscription_update.portal_client_products.disable_quantities%2Cconfiguration.features.subscription_update.portal_client_products.min_quantity%2Cconfiguration.features.subscription_update.portal_client_products.max_quantity%2Cconfiguration.features.subscription_update.portal_client_products.product%2Cconfiguration.features.subscription_update.portal_client_products.managed_payments_eligible%2Cflow.subscription_update_confirm.discounts.coupon.id%2Cflow.subscription_update_confirm.discounts.coupon.name%2Cflow.subscription_update_confirm.discounts.coupon.duration%2Cflow.subscription_update_confirm.discounts.coupon.duration_in_months%2Cflow.subscription_update_confirm.discounts.coupon.amount_off%2Cflow.subscription_update_confirm.discounts.coupon.currency%2Cflow.subscription_update_confirm.discounts.coupon.currency_options%2Cflow.subscription_update_confirm.discounts.coupon.percent_off%2Cconfiguration.features.subscription_update.portal_client_products.prices2 HTTP/2
+Host: billing.stripe.com
+Sec-Ch-Ua-Platform: "Windows"
+Authorization: Bearer ek_live_YWNjdF8xTnU1bVVLdlI0emxVTU9VLFdBN0hGS0dqNHM5Z2J5YzZkU1JCck9QVHdnaTAzcE0_007IlqkoHc
+Sec-Ch-Ua: "Chromium";v="145", "Not:A-Brand";v="99"
+Stripe-Version: 2025-06-30.basil
+Sec-Ch-Ua-Mobile: ?0
+X-Requested-With: XMLHttpRequest
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+X-Stripe-Manage-Client-Revision: 41c4840461dfc344c96c61ec5e3c4b45e8f3d93d
+X-Stripe-Csrf-Token: fake-deprecated-token
+Stripe-Account: acct_1Nu5mUKvR4zlUMOU
+Accept-Language: pt-BR
+X-Request-Source: service="customer_portal"; project="customer_portal"; operation="CustomerPortalContainerRetrieveSessionStateQuery"; component="CustomerPortalContainer"; load_id="d758f611-e22d-4e50-b5e2-1365900bb3fc"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36
+Stripe-Livemode: true
+Browser-Language: pt-BR
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://billing.stripe.com/p/session/live_YWNjdF8xTnU1bVVLdlI0emxVTU9VLF9VQ3pDSTc4eG5NaXMwV2lXUlhPb09JS25sVkNBSlJY0100XT7KfrtH/flow
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+]]></request>
+    <status>200</status>
+    <responselength>95101</responselength>
+    <mimetype>JSON</mimetype>
+    <response base64="false"><![CDATA[HTTP/2 200 OK
+Server: nginx
+Date: Tue, 24 Mar 2026 18:02:05 GMT
+Content-Type: application/json
+Content-Length: 94030
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: GET, HEAD, PUT, PATCH, POST, DELETE
+Access-Control-Allow-Origin: *
+Access-Control-Expose-Headers: Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+Access-Control-Max-Age: 300
+Cache-Control: no-cache, no-store
+Content-Security-Policy: base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=daaRorOZ6mQ4c0P4uiaZqIf_51DSReDXDZAG8Py1LwmQ0_4J81CHWQ0I2zeFlMT3ofpL4wMJyVZrVWO3
+Request-Id: req_pF3txbad1V6VQx
+Stripe-Version: 2025-06-30.basil
+Vary: Origin
+X-Stripe-Priority-Routing-Enabled: true
+X-Stripe-Routing-Context-Priority-Tier: livemode
+X-Wc: ABGHIJ
+Referrer-Policy: strict-origin-when-cross-origin
+
+{
+  "id": "bps_1TEZDuKvR4zlUMOU6uHSGY2T",
+  "object": "billing_portal.session",
+  "accent_color": "#635bff",
+  "application": null,
+  "as_of": null,
+  "branding_color": "#1b1b1b",
+  "business_name": "Lovable Labs Incorporated",
+  "configuration": {
+    "id": "bpc_1Sfd34KvR4zlUMOUWk3aN6QL",
+    "object": "billing_portal.configuration",
+    "active": true,
+    "business_profile": {
+      "headline": null,
+      "privacy_policy_url": null,
+      "terms_of_service_url": null
+    },
+    "features": {
+      "customer_update": {
+        "allowed_updates": [
+          "name",
+          "email",
+          "address",
+          "phone",
+          "tax_id"
+        ],
+        "enabled": true
+      },
+      "invoice_history": {
+        "enabled": true
+      },
+      "payment_method_update": {
+        "enabled": true
+      },
+      "subscription_cancel": {
+        "cancellation_reason": {
+          "enabled": false,
+          "options": [
+            "too_expensive",
+            "missing_features",
+            "switched_service",
+            "unused",
+            "other"
+          ]
+        },
+        "enabled": true,
+        "mode": "at_period_end",
+        "proration_behavior": "none"
+      },
+      "subscription_pause": {
+        "enabled": false
+      },
+      "subscription_update": {
+        "default_allowed_updates": [
+          "price",
+          "promotion_code"
+        ],
+        "enabled": true,
+        "portal_client_products": [
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1SfJHYKvR4zlUMOUN4ABuaB4",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1SfJHYKvR4zlUMOUN4ABuaB4_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 500,
+                    "unit_amount_decimal": "500"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_TcYOEB09CskxdP",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 0 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 0",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 500,
+                "unit_amount_decimal": "500"
+              },
+              {
+                "id": "price_1SfJHYKvR4zlUMOUGHmwg6bZ",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1SfJHYKvR4zlUMOUGHmwg6bZ_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 5000,
+                    "unit_amount_decimal": "5000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_TcYOEB09CskxdP",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 0 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 0",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 5000,
+                "unit_amount_decimal": "5000"
+              }
+            ],
+            "product": "prod_TcYOEB09CskxdP"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcnxKvR4zlUMOUbuZoAFZ9",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcnxKvR4zlUMOUbuZoAFZ9_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 2500,
+                    "unit_amount_decimal": "2500"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oQjcilSS4ESn",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 1 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 1",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 2500,
+                "unit_amount_decimal": "2500"
+              },
+              {
+                "id": "price_1RnItgKvR4zlUMOUk8eTwAye",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnItgKvR4zlUMOUk8eTwAye_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 25000,
+                    "unit_amount_decimal": "25000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oQjcilSS4ESn",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 1 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 1",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 25000,
+                "unit_amount_decimal": "25000"
+              }
+            ],
+            "product": "prod_S5oQjcilSS4ESn"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcorKvR4zlUMOUkqlwJnGa",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcorKvR4zlUMOUkqlwJnGa_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 5000,
+                    "unit_amount_decimal": "5000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oRPy0Y0nPqxh",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 2 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 2",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 5000,
+                "unit_amount_decimal": "5000"
+              },
+              {
+                "id": "price_1RnIujKvR4zlUMOUtoIYlDEX",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIujKvR4zlUMOUtoIYlDEX_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 50000,
+                    "unit_amount_decimal": "50000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oRPy0Y0nPqxh",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 2 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 2",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 50000,
+                "unit_amount_decimal": "50000"
+              }
+            ],
+            "product": "prod_S5oRPy0Y0nPqxh"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcp9KvR4zlUMOUkgLVEDwi",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcp9KvR4zlUMOUkgLVEDwi_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 10000,
+                    "unit_amount_decimal": "10000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSF3553G847f",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 3 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 3",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 10000,
+                "unit_amount_decimal": "10000"
+              },
+              {
+                "id": "price_1RnIvKKvR4zlUMOU79kbH8O3",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIvKKvR4zlUMOU79kbH8O3_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 100000,
+                    "unit_amount_decimal": "100000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSF3553G847f",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 3 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 3",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 100000,
+                "unit_amount_decimal": "100000"
+              }
+            ],
+            "product": "prod_S5oSF3553G847f"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcpSKvR4zlUMOUpleDbItK",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcpSKvR4zlUMOUpleDbItK_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 20000,
+                    "unit_amount_decimal": "20000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSgRrV0vy7YI",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 4 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 4",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 20000,
+                "unit_amount_decimal": "20000"
+              },
+              {
+                "id": "price_1RnIvyKvR4zlUMOUieA2wVI5",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIvyKvR4zlUMOUieA2wVI5_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 200000,
+                    "unit_amount_decimal": "200000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSgRrV0vy7YI",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 4 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 4",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 200000,
+                "unit_amount_decimal": "200000"
+              }
+            ],
+            "product": "prod_S5oSgRrV0vy7YI"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcpgKvR4zlUMOUqsIXgxB8",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcpgKvR4zlUMOUqsIXgxB8_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 29400,
+                    "unit_amount_decimal": "29400"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSLOyTLvcqrO",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 5 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 5",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 29400,
+                "unit_amount_decimal": "29400"
+              },
+              {
+                "id": "price_1RnIwVKvR4zlUMOU1CZpVEDU",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIwVKvR4zlUMOU1CZpVEDU_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 294000,
+                    "unit_amount_decimal": "294000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSLOyTLvcqrO",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 5 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 5",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 294000,
+                "unit_amount_decimal": "294000"
+              }
+            ],
+            "product": "prod_S5oSLOyTLvcqrO"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcpsKvR4zlUMOU9D6gwsIu",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcpsKvR4zlUMOU9D6gwsIu_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 48000,
+                    "unit_amount_decimal": "48000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSMXlFglFbU2",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 6 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 6",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 48000,
+                "unit_amount_decimal": "48000"
+              },
+              {
+                "id": "price_1RnIx3KvR4zlUMOUmFqwUmRH",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIx3KvR4zlUMOUmFqwUmRH_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 480000,
+                    "unit_amount_decimal": "480000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oSMXlFglFbU2",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 6 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 6",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 480000,
+                "unit_amount_decimal": "480000"
+              }
+            ],
+            "product": "prod_S5oSMXlFglFbU2"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcq6KvR4zlUMOU4UouxiWg",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcq6KvR4zlUMOU4UouxiWg_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 70500,
+                    "unit_amount_decimal": "70500"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oTauRvBgrspu",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 7 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 7",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 70500,
+                "unit_amount_decimal": "70500"
+              },
+              {
+                "id": "price_1RnIy2KvR4zlUMOUSlfnR0kA",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIy2KvR4zlUMOUSlfnR0kA_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 705000,
+                    "unit_amount_decimal": "705000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oTauRvBgrspu",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 7 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 7",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 705000,
+                "unit_amount_decimal": "705000"
+              }
+            ],
+            "product": "prod_S5oTauRvBgrspu"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcqHKvR4zlUMOUMXNrHmxu",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcqHKvR4zlUMOUMXNrHmxu_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 92000,
+                    "unit_amount_decimal": "92000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oTiUv0zSPGmh",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 8 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 8",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 92000,
+                "unit_amount_decimal": "92000"
+              },
+              {
+                "id": "price_1RnIzKKvR4zlUMOUR17YsqZ3",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIzKKvR4zlUMOUR17YsqZ3_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 920000,
+                    "unit_amount_decimal": "920000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oTiUv0zSPGmh",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 8 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 8",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 920000,
+                "unit_amount_decimal": "920000"
+              }
+            ],
+            "product": "prod_S5oTiUv0zSPGmh"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RBcqUKvR4zlUMOU2OUUQldS",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RBcqUKvR4zlUMOU2OUUQldS_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 112500,
+                    "unit_amount_decimal": "112500"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oTiU22SV6og9",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 9 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 9",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 112500,
+                "unit_amount_decimal": "112500"
+              },
+              {
+                "id": "price_1RnIzuKvR4zlUMOU4aR4WZrB",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIzuKvR4zlUMOU4aR4WZrB_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 1125000,
+                    "unit_amount_decimal": "1125000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_S5oTiU22SV6og9",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 9 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 9",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 1125000,
+                "unit_amount_decimal": "1125000"
+              }
+            ],
+            "product": "prod_S5oTiU22SV6og9"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RbQNKKvR4zlUMOUAWZ6wmvv",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RbQNKKvR4zlUMOUAWZ6wmvv_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 168800,
+                    "unit_amount_decimal": "168800"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SWTJnANFP2q5KQ",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 10 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 10",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 168800,
+                "unit_amount_decimal": "168800"
+              },
+              {
+                "id": "price_1RnJ19KvR4zlUMOUy3CxzVlb",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnJ19KvR4zlUMOUy3CxzVlb_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 1688000,
+                    "unit_amount_decimal": "1688000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SWTJnANFP2q5KQ",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Pro 10 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 10",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 1688000,
+                "unit_amount_decimal": "1688000"
+              }
+            ],
+            "product": "prod_SWTJnANFP2q5KQ"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RdsuLKvR4zlUMOUGvtsSeXl",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RdsuLKvR4zlUMOUGvtsSeXl_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 225000,
+                    "unit_amount_decimal": "225000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SWTNJqORiQTX4R",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Teams 11 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 11",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 225000,
+                "unit_amount_decimal": "225000"
+              },
+              {
+                "id": "price_1RnJ3GKvR4zlUMOUknvWAWbK",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnJ3GKvR4zlUMOUknvWAWbK_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 2250000,
+                    "unit_amount_decimal": "2250000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SWTNJqORiQTX4R",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Teams 11 Monthly subscription",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Pro 11",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 2250000,
+                "unit_amount_decimal": "2250000"
+              }
+            ],
+            "product": "prod_SWTNJqORiQTX4R"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIYhKvR4zlUMOU81PfruiM",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIYhKvR4zlUMOU81PfruiM_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 50000,
+                    "unit_amount_decimal": "50000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXo59CXtE0wj",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 1 Monthly subscription - 100 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 1",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 50000,
+                "unit_amount_decimal": "50000"
+              },
+              {
+                "id": "price_1RgMOdKvR4zlUMOUVsqPsi4l",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMOdKvR4zlUMOUVsqPsi4l_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 5000,
+                    "unit_amount_decimal": "5000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXo59CXtE0wj",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 1 Monthly subscription - 100 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 1",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 5000,
+                "unit_amount_decimal": "5000"
+              }
+            ],
+            "product": "prod_SbZXo59CXtE0wj"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIfXKvR4zlUMOUXc9rb1nK",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIfXKvR4zlUMOUXc9rb1nK_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 100000,
+                    "unit_amount_decimal": "100000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXneRP8c7KJm",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 2 Monthly subscription - 200 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 2",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 100000,
+                "unit_amount_decimal": "100000"
+              },
+              {
+                "id": "price_1RgMObKvR4zlUMOUmzfCLZgG",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMObKvR4zlUMOUmzfCLZgG_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 10000,
+                    "unit_amount_decimal": "10000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXneRP8c7KJm",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 2 Monthly subscription - 200 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 2",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 10000,
+                "unit_amount_decimal": "10000"
+              }
+            ],
+            "product": "prod_SbZXneRP8c7KJm"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIh3KvR4zlUMOUIKHtKR6v",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIh3KvR4zlUMOUIKHtKR6v_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 200000,
+                    "unit_amount_decimal": "200000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXkGmJviKiX6",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 3 Monthly subscription - 400 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 3",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 200000,
+                "unit_amount_decimal": "200000"
+              },
+              {
+                "id": "price_1RgMOWKvR4zlUMOURRfk6VgZ",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMOWKvR4zlUMOURRfk6VgZ_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 20000,
+                    "unit_amount_decimal": "20000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXkGmJviKiX6",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 3 Monthly subscription - 400 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 3",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 20000,
+                "unit_amount_decimal": "20000"
+              }
+            ],
+            "product": "prod_SbZXkGmJviKiX6"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIhpKvR4zlUMOUh7oBoLFX",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIhpKvR4zlUMOUh7oBoLFX_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 400000,
+                    "unit_amount_decimal": "400000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXH2K8Bz0PKC",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 4 Monthly subscription - 800 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 4",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 400000,
+                "unit_amount_decimal": "400000"
+              },
+              {
+                "id": "price_1RgMOTKvR4zlUMOUG51VTIxU",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMOTKvR4zlUMOUG51VTIxU_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 40000,
+                    "unit_amount_decimal": "40000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXH2K8Bz0PKC",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 4 Monthly subscription - 800 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 4",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 40000,
+                "unit_amount_decimal": "40000"
+              }
+            ],
+            "product": "prod_SbZXH2K8Bz0PKC"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIjiKvR4zlUMOU1VgXeXct",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIjiKvR4zlUMOU1VgXeXct_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 588000,
+                    "unit_amount_decimal": "588000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXRjVRV7ne8t",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 5 Monthly subscription - 1200 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 5",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 588000,
+                "unit_amount_decimal": "588000"
+              },
+              {
+                "id": "price_1RgMOPKvR4zlUMOUb6BEnsa2",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMOPKvR4zlUMOUb6BEnsa2_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 58800,
+                    "unit_amount_decimal": "58800"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXRjVRV7ne8t",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 5 Monthly subscription - 1200 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 5",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 58800,
+                "unit_amount_decimal": "58800"
+              }
+            ],
+            "product": "prod_SbZXRjVRV7ne8t"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RmA2XKvR4zlUMOUIMqxSbew",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RmA2XKvR4zlUMOUIMqxSbew_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 960000,
+                    "unit_amount_decimal": "960000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXtUa38rzcQf",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 6 Monthly subscription - 2000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 6",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 960000,
+                "unit_amount_decimal": "960000"
+              },
+              {
+                "id": "price_1RgMOMKvR4zlUMOUoHOkssc8",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMOMKvR4zlUMOUoHOkssc8_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 96000,
+                    "unit_amount_decimal": "96000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXtUa38rzcQf",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 6 Monthly subscription - 2000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 6",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 96000,
+                "unit_amount_decimal": "96000"
+              }
+            ],
+            "product": "prod_SbZXtUa38rzcQf"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RmA3aKvR4zlUMOU1lUJfiwR",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RmA3aKvR4zlUMOU1lUJfiwR_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 1410000,
+                    "unit_amount_decimal": "1410000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXfehYoiksvC",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 7 Monthly subscription - 3000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 7",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 1410000,
+                "unit_amount_decimal": "1410000"
+              },
+              {
+                "id": "price_1RgMOIKvR4zlUMOU0mn4w1bo",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMOIKvR4zlUMOU0mn4w1bo_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 141000,
+                    "unit_amount_decimal": "141000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXfehYoiksvC",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 7 Monthly subscription - 3000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 7",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 141000,
+                "unit_amount_decimal": "141000"
+              }
+            ],
+            "product": "prod_SbZXfehYoiksvC"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIoKKvR4zlUMOUYz9VO7lq",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIoKKvR4zlUMOUYz9VO7lq_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 1840000,
+                    "unit_amount_decimal": "1840000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXSi2XWA4AP7",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 8 Monthly subscription - 4000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 8",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 1840000,
+                "unit_amount_decimal": "1840000"
+              },
+              {
+                "id": "price_1RgMODKvR4zlUMOUov440qtf",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMODKvR4zlUMOUov440qtf_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 184000,
+                    "unit_amount_decimal": "184000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZXSi2XWA4AP7",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 8 Monthly subscription - 4000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 8",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 184000,
+                "unit_amount_decimal": "184000"
+              }
+            ],
+            "product": "prod_SbZXSi2XWA4AP7"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RmA6nKvR4zlUMOU8GMlxTTe",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RmA6nKvR4zlUMOU8GMlxTTe_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 2250000,
+                    "unit_amount_decimal": "2250000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZWN7CW4SAhtL",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 9 Monthly subscription - 5000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 9",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 2250000,
+                "unit_amount_decimal": "2250000"
+              },
+              {
+                "id": "price_1RgMNUKvR4zlUMOUOOjhzsgT",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMNUKvR4zlUMOUOOjhzsgT_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 225000,
+                    "unit_amount_decimal": "225000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZWN7CW4SAhtL",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 9 Monthly subscription - 5000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 9",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 225000,
+                "unit_amount_decimal": "225000"
+              }
+            ],
+            "product": "prod_SbZWN7CW4SAhtL"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RmA7ZKvR4zlUMOUJSIyJKzH",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RmA7ZKvR4zlUMOUJSIyJKzH_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 3300000,
+                    "unit_amount_decimal": "3300000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZWXRhxsy9Wvb",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 10 Monthly subscription - 7500 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 10",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 3300000,
+                "unit_amount_decimal": "3300000"
+              },
+              {
+                "id": "price_1RgMNPKvR4zlUMOUyvN1oryv",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMNPKvR4zlUMOUyvN1oryv_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 330000,
+                    "unit_amount_decimal": "330000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZWXRhxsy9Wvb",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 10 Monthly subscription - 7500 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 10",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 330000,
+                "unit_amount_decimal": "330000"
+              }
+            ],
+            "product": "prod_SbZWXRhxsy9Wvb"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1RnIq8KvR4zlUMOUzloPDXB2",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RnIq8KvR4zlUMOUzloPDXB2_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 4300000,
+                    "unit_amount_decimal": "4300000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZWJrTBQHucUS",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 11 Monthly subscription - 10000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 11",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "year",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 4300000,
+                "unit_amount_decimal": "4300000"
+              },
+              {
+                "id": "price_1RgMNMKvR4zlUMOUunPPxf25",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1RgMNMKvR4zlUMOUunPPxf25_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 430000,
+                    "unit_amount_decimal": "430000"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_SbZWJrTBQHucUS",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Lovable Business 11 Monthly subscription - 10000 credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Business 11",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 430000,
+                "unit_amount_decimal": "430000"
+              }
+            ],
+            "product": "prod_SbZWJrTBQHucUS"
+          },
+          {
+            "disable_quantities": false,
+            "managed_payments_eligible": null,
+            "max_quantity": null,
+            "min_quantity": null,
+            "prices2": [
+              {
+                "id": "price_1SQSE8KvR4zlUMOUgIcRNEh1",
+                "object": "price",
+                "active": true,
+                "billing_scheme": "per_unit",
+                "currency": "usd",
+                "currency_options_list": [
+                  {
+                    "id": "price_1SQSE8KvR4zlUMOUgIcRNEh1_usd",
+                    "currency": "usd",
+                    "custom_unit_amount": null,
+                    "tax_behavior": "unspecified",
+                    "unit_amount": 500,
+                    "unit_amount_decimal": "500"
+                  }
+                ],
+                "custom_unit_amount": null,
+                "livemode": true,
+                "product": {
+                  "id": "prod_TNCdL8y7eWwZXU",
+                  "object": "product",
+                  "active": true,
+                  "addons": null,
+                  "attributes": [],
+                  "dashboard_images": [],
+                  "description": "Maintain access to your projects without active development credits",
+                  "images": [],
+                  "livemode": true,
+                  "name": "Lite",
+                  "unit_label": null,
+                  "url": null
+                },
+                "recurring": {
+                  "aggregate_usage": null,
+                  "interval": "month",
+                  "interval_count": 1,
+                  "meter": null,
+                  "trial_period_days": null,
+                  "usage_type": "licensed"
+                },
+                "tax_behavior": "unspecified",
+                "tiers_mode": null,
+                "transform_quantity": null,
+                "type": "recurring",
+                "unit_amount": 500,
+                "unit_amount_decimal": "500"
+              }
+            ],
+            "product": "prod_TNCdL8y7eWwZXU"
+          }
+        ],
+        "proration_behavior": "always_invoice"
+      }
+    },
+    "is_default": false,
+    "livemode": true,
+    "login_page": {
+      "id": "bpc_1Sfd34KvR4zlUMOUWk3aN6QL",
+      "enabled": false,
+      "url": null
+    }
+  },
+  "country_code": "BR",
+  "created_from": "api",
+  "customer": "cus_UCyHFaUz1s8Y1T",
+  "flow": {
+    "id": "bps_1TEZDuKvR4zlUMOU6uHSGY2T",
+    "after_completion": {
+      "id": "bps_1TEZDuKvR4zlUMOU6uHSGY2T",
+      "hosted_confirmation": null,
+      "redirect": {
+        "return_url": "https://lovable.dev/purchase-success?customer_type=existing&order_id=e4b9fbdc-ae8e-4093-a3e9-4317f1e7b3f5&plan_id=pro_0&plan_type=monthly&redirect=https%3A%2F%2Flovable.dev%2Fsettings%3Ftab%3Dbilling%26change_type%3Dupgrade%26plan_type%3Dmonthly"
+      },
+      "type": "redirect"
+    },
+    "cancellation_reason": null,
+    "subscription_cancel": null,
+    "subscription_update": null,
+    "subscription_update_confirm": {
+      "discounts": null,
+      "recurring_items": [
+        {
+          "id": "si_UCyNU3qSBkksJY",
+          "price": "price_1SfJHYKvR4zlUMOUN4ABuaB4"
+        }
+      ],
+      "subscription": "sub_1TEYQlKvR4zlUMOUICORWDAb"
+    },
+    "type": "subscription_update_confirm"
+  },
+  "has_active_rate_card_subscription": false,
+  "icon": "https://files.stripe.com/files/MDB8YWNjdF8xTnU1bVVLdlI0emxVTU9VfGZfbGl2ZV9nRVZaTW5zT3FobGNXdDNoVGl1QXZ4RDk00UiCay49x",
+  "is_merchant_default_tax_behavior_set": true,
+  "legacy_retention_features_active": true,
+  "livemode": true,
+  "logo": "https://files.stripe.com/files/MDB8YWNjdF8xTnU1bVVLdlI0emxVTU9VfGZfbGl2ZV9IS2lXTGlIUWlZWmpiZW1MTVhhT2FMdVA00J3YgF4j7",
+  "merchant_timezone": null,
+  "on_behalf_of": null,
+  "refund_flows_enabled": false,
+  "retention_flows_enabled": false,
+  "return_url": "https://lovable.dev/settings?tab=billing&payment_status=failed&plan_id=pro_0&change_type=upgrade",
+  "site_key": "b02a550f-4331-454d-a09c-7208c5722178",
+  "url": "https://billing.stripe.com/p/session/live_YWNjdF8xTnU1bVVLdlI0emxVTU9VLF9VQ3pDSTc4eG5NaXMwV2lXUlhPb09JS25sVkNBSlJY0100XT7KfrtH/flow",
+  "use_logo_instead_of_icon": true
+}]]></response>
+    <comment></comment>
+  </item>
+</items>
