@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.xorg.xorgserver
     pkgs.gcc-unwrapped
     pkgs.fontconfig
     pkgs.freetype
