@@ -183,14 +183,16 @@ const INCLUDE_ONLY_FIELDS = [
   "flow.subscription_update_confirm.discounts.coupon.currency_options",
   "flow.subscription_update_confirm.discounts.coupon.percent_off",
   "configuration.features.subscription_update.portal_client_products.prices2",
-].join(",");
+];
 
 function buildStep2Url(sessionId: string): string {
   const params = new URLSearchParams();
   for (const exp of EXPAND_PARAMS) {
     params.append("expand[]", exp);
   }
-  params.append("include_only[]", INCLUDE_ONLY_FIELDS);
+  for (const field of INCLUDE_ONLY_FIELDS) {
+    params.append("include_only[]", field);
+  }
   return `${STEP2_BASE_URL}/${sessionId}?${params.toString()}`;
 }
 
@@ -215,7 +217,7 @@ function buildStep2Headers(
     "Sec-Fetch-Dest": "empty",
     "Accept-Encoding": "gzip, deflate, br",
     Priority: "u=1, i",
-    "X-Stripe-Csrf-Token": "fake-deprecated-token",
+    "X-Stripe-Csrf-Token": step1.csrfToken ?? "fake-deprecated-token",
     "X-Request-Source": `service="customer_portal"; project="customer_portal"; operation="CustomerPortalContainerRetrieveSessionStateQuery"; component="CustomerPortalContainer"; load_id="${loadId}"`,
   };
 
