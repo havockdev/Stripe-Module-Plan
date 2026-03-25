@@ -1,0 +1,47 @@
+====================================================================================================
+ INICIANDO AUTOMAÇÃO DE PAGAMENTO STRIPE
+====================================================================================================
+ URL: https://checkout.stripe.com/c/pay/cs_live_b1DODvkFyfDCLRL9AJV0Vcupp0kzGmyFjQUKFoEHPpeJE08BkdYdYacfsi#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdpamZkaWAnPydkcHFqJykndnBndmZ3bHVxbGprUGtsdHBga2B2dkBrZGdpYGEnP3F3cGApJ2R1bE5gfCc%2FJ3VuWmlsc2BaMDRLcDBoUE5zVzF%2FaVBISlBwfUh%2FYlRTMzRfRElKN293fzddNTRCRGROUW0wPDFSZml9R3NIYF9%2FfWRrbW83UGhBfT1pU3ZzUnZoSUB8bGd0MUtzQk9OTzY1NTNAVV1XNTY2JyknY3dqaFZgd3Ngdyc%2FcXdwYCknZ2RmbmJ3anBrYUZqaWp3Jz8nJjRnNGc0ZycpJ2lkfGpwcVF8dWAnPydocGlxbFpscWBoJyknYGtkZ2lgVWlkZmBtamlhYHd2Jz9xd3BgeCUl
+    [2026-03-25T09:39:39.415Z] [stripe-checkout] [info] Inicializando navegador Firefox (display virtual) com evasão de detecção...
+    [2026-03-25T09:39:41.678Z] [stripe-checkout] [info] Extraindo dados da sessão...
+    [2026-03-25T09:39:41.681Z] [stripe-checkout] [success] ID da sessão extraído: cs_live_b1DODvkFyfDCLRL9AJV0Vcupp0kzGmyFjQUKFoEHPpeJE08BkdYdYacfsi
+    [2026-03-25T09:39:41.681Z] [stripe-checkout] [info] Acessando página de checkout e capturando valor da sessão...
+    [2026-03-25T09:39:43.493Z] [stripe-checkout] [success] Valor real da sessão capturado: 2723 centavos (total_summary.total)
+    [2026-03-25T09:39:43.494Z] [stripe-checkout] [info] Desconto na sessão (via API): NÃO | descontos: 0 | subtotal: 2723 | total: 2723
+    [2026-03-25T09:39:43.494Z] [stripe-checkout] [info] EID do servidor capturado: 56270b66-315f-493a-93c1-2d968452cd66
+    [2026-03-25T09:39:43.494Z] [stripe-checkout] [info] rqdata capturado (296 chars)
+    [2026-03-25T09:39:43.494Z] [stripe-checkout] [info] init_checksum capturado: 6eszhhXHSGbjjKqy7dO123fpVidk0Yiy
+    [2026-03-25T09:39:48.496Z] [stripe-checkout] [info] Buscando chave pública do Stripe...
+    [2026-03-25T09:39:48.982Z] [stripe-checkout] [success] Chave pública extraída do HTML: pk_live_51Nu5mU...
+    [2026-03-25T09:39:48.995Z] [stripe-checkout] [success] MUID extraído do cookie __stripe_mid: 79f0ab02... (36 chars)
+    [2026-03-25T09:39:48.995Z] [stripe-checkout] [success] SID extraído do cookie __stripe_sid: e3eefa32... (36 chars)
+    [2026-03-25T09:39:48.995Z] [stripe-checkout] [success] GUID extraído do cookie m (m.stripe.com): 96897642... (36 chars)
+    [2026-03-25T09:39:48.995Z] [stripe-checkout] [info] IDs de rastreamento: GUID=96897642..., MUID=79f0ab02..., SID=e3eefa32...
+    [2026-03-25T09:39:48.995Z] [stripe-checkout] [info] Iniciando processo de aplicação de cupons...
+    [2026-03-25T09:39:49.248Z] [stripe-checkout] [info] Testando cupom: SYMPOSIUMPC20
+    [2026-03-25T09:39:50.583Z] [stripe-checkout] [info] Submetendo cupom e aguardando resposta da API Stripe...
+    [2026-03-25T09:39:51.589Z] [stripe-checkout] [success] Valor real da sessão capturado: 0 centavos (total_summary.total)
+    [2026-03-25T09:39:51.590Z] [stripe-checkout] [info] Desconto na sessão (via API): SIM ✓ | descontos: 0 | subtotal: 2723 | total: 0
+    [2026-03-25T09:39:51.590Z] [stripe-checkout] [info] EID do servidor capturado: 56270b66-315f-493a-93c1-2d968452cd66
+    [2026-03-25T09:39:51.590Z] [stripe-checkout] [info] rqdata capturado (296 chars)
+    [2026-03-25T09:39:51.590Z] [stripe-checkout] [info] init_checksum capturado: 6eszhhXHSGbjjKqy7dO123fpVidk0Yiy
+    [2026-03-25T09:39:53.634Z] [stripe-checkout] [success] Cupom SYMPOSIUMPC20 APLICADO COM SUCESSO! (valorEsperado: 0 centavos)
+    [2026-03-25T09:39:53.635Z] [stripe-checkout] [info] Preenchendo formulário de cartão no browser (via Playwright)...
+    [2026-03-25T09:39:58.585Z] [stripe-checkout] [info] Campo de e-mail não encontrado (já preenchido ou ausente na sessão).
+    [2026-03-25T09:40:00.969Z] [stripe-checkout] [info] Número do cartão preenchido.
+    [2026-03-25T09:40:02.156Z] [stripe-checkout] [info] Validade do cartão preenchida.
+    [2026-03-25T09:40:03.144Z] [stripe-checkout] [info] CVC preenchido.
+    [2026-03-25T09:40:03.385Z] [stripe-checkout] [info] Nome do titular preenchido.
+    [2026-03-25T09:40:06.672Z] [stripe-checkout] [info] Endereço linha 1 preenchido.
+    [2026-03-25T09:40:07.493Z] [stripe-checkout] [info] Estado selecionado: MS
+    [2026-03-25T09:40:07.733Z] [stripe-checkout] [info] Cidade preenchida.
+    [2026-03-25T09:40:08.082Z] [stripe-checkout] [info] CEP preenchido.
+    [2026-03-25T09:40:10.083Z] [stripe-checkout] [info] Clicando no botão de pagamento...
+    [2026-03-25T09:40:10.376Z] [stripe-checkout] [info] Botão de pagamento clicado — aguardando Stripe.js processar (hCaptcha + confirm)...
+    [2026-03-25T09:40:12.440Z] [stripe-checkout] [info] Status da sessão (confirm): open
+    [2026-03-25T09:40:12.443Z] [stripe-checkout] [info] Status do pagamento: unpaid
+    [2026-03-25T09:40:12.443Z] [stripe-checkout] [info] Status open recebido — aguardando redirecionamento assíncrono do Stripe...
+    [2026-03-25T09:40:12.443Z] [stripe-checkout] [info] Fechando navegador...
+====================================================================================================
+ FALHA NA AUTOMACAO STRIPE
+====================================================================================================

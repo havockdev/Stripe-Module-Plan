@@ -1,0 +1,28 @@
+====================================================================================================
+ INICIANDO AUTOMAÇÃO DE PAGAMENTO STRIPE
+====================================================================================================
+ URL: https://checkout.stripe.com/c/pay/cs_live_b1sbLbpFHWj19lWlrGGPPwlQD6hfDpeEImOzf9smMrDGcLrvBh95JsyQon#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdpamZkaWAnPydkcHFqJykndnBndmZ3bHVxbGprUGtsdHBga2B2dkBrZGdpYGEnP3F3cGApJ2R1bE5gfCc%2FJ3VuWmlsc2BaMDRLcDBoUE5zVzF%2FaVBISlBwfUh%2FYlRTMzRfRElKN293fzddNTRCRGROUW0wPDFSZml9R3NIYF9%2FfWRrbW83UGhBfT1pU3ZzUnZoSUB8bGd0MUtzQk9OTzY1NTNAVV1XNTY2JyknY3dqaFZgd3Ngdyc%2FcXdwYCknZ2RmbmJ3anBrYUZqaWp3Jz8nJjRnNGc0ZycpJ2lkfGpwcVF8dWAnPydocGlxbFpscWBoJyknYGtkZ2lgVWlkZmBtamlhYHd2Jz9xd3BgeCUl
+    [2026-03-25T09:35:38.488Z] [stripe-checkout] [info] Inicializando navegador Firefox (display virtual) com evasão de detecção...
+    [2026-03-25T09:35:38.567Z] [stripe-checkout] [error] Erro fatal na execução: browserType.launch: Failed to launch the browser process.
+Browser logs:
+
+<launching> /root/.cache/ms-playwright/firefox-1509/firefox/firefox -no-remote -wait-for-browser -foreground -profile /tmp/playwright_firefoxdev_profile-LW7cNa -juggler-pipe -silent
+<launched> pid=505241
+[pid=505241][err] Error: cannot open display: :0
+[pid=505241] <process did exit: exitCode=1, signal=null>
+[pid=505241] starting temporary directories cleanup
+Call log:
+  - <launching> /root/.cache/ms-playwright/firefox-1509/firefox/firefox -no-remote -wait-for-browser -foreground -profile /tmp/playwright_firefoxdev_profile-LW7cNa -juggler-pipe -silent
+  - <launched> pid=505241
+  - [pid=505241][err] Error: cannot open display: :0
+  - [pid=505241] <process did exit: exitCode=1, signal=null>
+  - [pid=505241] starting temporary directories cleanup
+  - [pid=505241] <gracefully close start>
+  - [pid=505241] <kill>
+  - [pid=505241] <skipped force kill spawnedProcess.killed=false processClosed=true>
+  - [pid=505241] finished temporary directories cleanup
+  - [pid=505241] <gracefully close end>
+
+====================================================================================================
+ FALHA NA AUTOMACAO STRIPE
+====================================================================================================
