@@ -15,8 +15,8 @@ const CARTOES: OpcoesPagamento["cartao"][] = [
     mesVencimento: "03",
     anoVencimento: "34",
   },
-  { numero: "5226261200293012", cvv: "237", mesVencimento: "03", anoVencimento: "34" },
-  { numero: "5226269772380877", cvv: "922", mesVencimento: "03", anoVencimento: "34" },
+  // { numero: "5226261200293012", cvv: "237", mesVencimento: "03", anoVencimento: "34" },
+  // { numero: "5226269772380877", cvv: "922", mesVencimento: "03", anoVencimento: "34" },
 ];
 
 const DADOS_BASE = {
@@ -275,7 +275,6 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
         `Pagamento aprovado com cartão ...${cartao.numero.slice(-4)} — índice mantido`,
       );
       jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
-
     } else if (resultado.status === "card_declined") {
       // Recusa do cartão — penaliza o cartão (pode remover após 10x)
       const foiRemovido = registrarErroCartao(cartao.numero);
@@ -283,7 +282,11 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
 
       if (foiRemovido) {
         req.log.warn(
-          { jobId, cartaoFinal: cartao.numero.slice(-4), totalCartoes: CARTOES.length },
+          {
+            jobId,
+            cartaoFinal: cartao.numero.slice(-4),
+            totalCartoes: CARTOES.length,
+          },
           `Cartão ...${cartao.numero.slice(-4)} removido após ${LIMITE_ERROS} recusas consecutivas — restam ${CARTOES.length} cartão(ões)`,
         );
       } else {
@@ -301,12 +304,11 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
         );
       }
       jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
-
     } else {
       // Erro genérico — NÃO penaliza o cartão, apenas avança o índice.
       avancarIndice();
 
-      // ── Detecção de 3DS: entra em cooldown de 10 min ──────────────────
+      // ── Detecção de 3DS: entra em cooldown ────────────────────────────
       const e3DS = resultado.mensagem?.includes("3DS");
       if (e3DS) {
         const cooldownAte = Date.now() + COOLDOWN_3DS_MS;
@@ -337,12 +339,20 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
           },
           `Cartão ...${cartao.numero.slice(-4)} — erro não-penalizante (${resultado.status}) — próximo índice: ${indiceCartaoAtual}`,
         );
-        jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
+        jobs.set(jobId, {
+          status: "concluido",
+          resultado,
+          criadoEm: Date.now(),
+        });
       }
     }
 
     req.log.info(
-      { jobId, statusJob: jobs.get(jobId)?.status, statusResultado: resultado.status },
+      {
+        jobId,
+        statusJob: jobs.get(jobId)?.status,
+        statusResultado: resultado.status,
+      },
       "Job de checkout finalizado",
     );
   })();
@@ -390,7 +400,10 @@ router.get("/checkout/status/:jobId", (req: Request, res: Response) => {
     // Cooldown expirado — transiciona para concluido
     job.status = "concluido";
     jobs.set(jobId, job);
-    req.log.info({ jobId }, "Cooldown expirado — job transicionado para concluido");
+    req.log.info(
+      { jobId },
+      "Cooldown expirado — job transicionado para concluido",
+    );
   }
 
   res.json({ status: "concluido", resultado: job.resultado });
