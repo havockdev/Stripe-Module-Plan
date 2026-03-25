@@ -71,6 +71,11 @@ router.post("/stripe/step3", async (req: Request, res: Response) => {
     return;
   }
 
+  if (!step1.stripeAccount) {
+    res.status(400).json({ error: "Step 1 result is missing stripeAccount" });
+    return;
+  }
+
   if (!step2 || !step2.sessionId || !step2.flow?.subscriptionId) {
     res.status(400).json({ error: "Missing or invalid step2 result (requires sessionId and subscriptionId)" });
     return;

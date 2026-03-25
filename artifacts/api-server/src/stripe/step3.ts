@@ -184,6 +184,7 @@ function buildStep3Headers(
     "Accept-Encoding": "gzip, deflate, br",
     Priority: "u=1, i",
     Referer: referer,
+    // Step2Result não expõe csrfToken; usa-se o token extraído no Step 1 (Burp 003 confirma mesmo valor)
     "X-Stripe-Csrf-Token": step1.csrfToken ?? "fake-deprecated-token",
     "X-Request-Source": `service="customer_portal"; project="customer_portal"; operation="PreviewPageBodyUpdateSubscriptionStateMutation"; component="PreviewPageBody"; load_id="${loadId}"`,
   };
