@@ -1,8 +1,9 @@
 import { Router, type IRouter, type Request, type Response } from "express";
+import type { OpcoesPagamento } from "@workspace/stripe-checkout";
 
 const router: IRouter = Router();
 
-const DADOS_PAGAMENTO = {
+const DADOS_PAGAMENTO: OpcoesPagamento = {
   codigos: ["SYMPOSIUMPC20"],
   cartao: {
     numero: "5226261200293012",
@@ -25,21 +26,28 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
   const { link } = req.body as { link?: string };
 
   if (!link || typeof link !== "string") {
-    res.status(400).json({ error: "Campo 'link' ausente ou inválido no body da requisição" });
+    res.status(400).json({
+      sucesso: false,
+      status: "error",
+      mensagem: "Campo 'link' ausente ou inválido no body da requisição",
+    });
     return;
   }
 
   if (!link.startsWith("https://checkout.stripe.com/")) {
-    res.status(400).json({ error: "O campo 'link' deve ser uma URL válida do Stripe Checkout" });
+    res.status(400).json({
+      sucesso: false,
+      status: "error",
+      mensagem: "O campo 'link' deve ser uma URL válida do Stripe Checkout",
+    });
     return;
   }
 
   try {
     req.log.info({ url: link.split("#")[0] }, "Iniciando processamento de checkout");
 
-    // Import dinâmico — o módulo é ESM puro sem tipos TypeScript
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { processarPagamento } = (await import("@workspace/stripe-checkout")) as any;
+    // Import dinâmico — módulo ESM puro; os tipos vêm de src/types/stripe-checkout.d.ts
+    const { processarPagamento } = await import("@workspace/stripe-checkout");
     const resultado = await processarPagamento(link, DADOS_PAGAMENTO);
 
     req.log.info({ status: resultado.status, sucesso: resultado.sucesso }, "Checkout concluído");
