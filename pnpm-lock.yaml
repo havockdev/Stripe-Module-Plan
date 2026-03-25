@@ -169,6 +169,9 @@ importers:
       '@workspace/db':
         specifier: workspace:*
         version: link:../../lib/db
+      '@workspace/stripe-checkout':
+        specifier: workspace:*
+        version: link:../../lib/stripe-checkout
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7
@@ -190,6 +193,9 @@ importers:
       pino-http:
         specifier: ^10
         version: 10.5.0
+      playwright:
+        specifier: ^1.40.0
+        version: 1.58.2
     devDependencies:
       '@types/cookie-parser':
         specifier: ^1.4.10
