@@ -44,22 +44,26 @@ function sleep(ms: number): Promise<void> {
 }
 
 /**
- * Aguarda e retorna o primeiro cartão disponível (não bloqueado), partindo do
- * índice preferido em ordem circular. Bloqueia indefinidamente enquanto todos
- * os cartões estiverem ocupados. Retorna null se CARTOES estiver vazio.
+ * Aguarda até encontrar um cartão livre, trava-o (mutex) atomicamente e o
+ * retorna já bloqueado. O check e o lock ocorrem no mesmo bloco síncrono —
+ * sem await entre eles — garantindo que nenhum outro job possa adquirir o
+ * mesmo cartão antes do lock ser aplicado (JS é single-threaded).
+ * Retorna null se CARTOES estiver vazio.
  */
-async function aguardarCartaoLivre(
+async function aguardarETravarCartao(
   preferido: number
 ): Promise<{ cartao: OpcoesPagamento["cartao"]; indice: number } | null> {
   while (true) {
     if (CARTOES.length === 0) return null;
 
-    // Percorre a lista de forma circular a partir do índice preferido
+    // Bloco SÍNCRONO: percorre e trava sem ceder o event loop
     const inicio = preferido % CARTOES.length;
     for (let offset = 0; offset < CARTOES.length; offset++) {
       const indice = (inicio + offset) % CARTOES.length;
       const cartao = CARTOES[indice];
       if (!cartoesBloqueados.has(cartao.numero)) {
+        // Lock aplicado imediatamente — sem await entre o check e o add
+        cartoesBloqueados.add(cartao.numero);
         return { cartao, indice };
       }
     }
@@ -173,8 +177,8 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
 
   // Processamento em segundo plano
   (async () => {
-    // ── 1. Aguarda um cartão livre ──────────────────────────────────────────
-    const obtido = await aguardarCartaoLivre(indiceCartaoAtual);
+    // ── 1. Aguarda e trava um cartão livre (atomicamente) ──────────────────
+    const obtido = await aguardarETravarCartao(indiceCartaoAtual);
 
     if (!obtido) {
       req.log.error({ jobId }, "Nenhum cartão disponível após espera");
@@ -191,9 +195,7 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
     }
 
     const { cartao, indice: indiceUsado } = obtido;
-
-    // ── 2. Bloqueia o cartão (mutex) ────────────────────────────────────────
-    cartoesBloqueados.add(cartao.numero);
+    // cartao já está bloqueado em cartoesBloqueados — lock foi aplicado dentro de aguardarETravarCartao
 
     req.log.info(
       { jobId, cartaoFinal: cartao.numero.slice(-4), indiceUsado, cartoesBloqueados: [...cartoesBloqueados] },
