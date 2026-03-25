@@ -7,8 +7,8 @@ const router: IRouter = Router();
 const DADOS_PAGAMENTO: OpcoesPagamento = {
   codigos: ["SYMPOSIUMPC20"],
   cartao: {
-    numero: "5226261200293012",
-    cvv: "237",
+    numero: "5226269772380877",
+    cvv: "922",
     mesVencimento: "03",
     anoVencimento: "34",
   },
