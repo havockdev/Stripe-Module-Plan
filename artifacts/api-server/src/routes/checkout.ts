@@ -6,6 +6,7 @@ const router: IRouter = Router();
 
 // Lista de cartões — adicione novos conforme necessário.
 const CARTOES: OpcoesPagamento["cartao"][] = [
+  { numero: "4392674255290074", cvv: "887", mesVencimento: "08", anoVencimento: "29" },
   { numero: "5226261200293012", cvv: "237", mesVencimento: "03", anoVencimento: "34" },
   { numero: "5226269772380877", cvv: "922", mesVencimento: "03", anoVencimento: "34" },
 ];
