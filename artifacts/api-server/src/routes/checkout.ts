@@ -10,11 +10,24 @@ const router: IRouter = Router();
 // Lista de cartões — adicione novos conforme necessário.
 const CARTOES: OpcoesPagamento["cartao"][] = [
   {
-    numero: "5502094503434958",
-    cvv: "963",
+    numero: "5502096939163291",
+    cvv: "400",
     mesVencimento: "03",
     anoVencimento: "34",
   },
+  {
+    numero: "5502090020772540",
+    cvv: "614",
+    mesVencimento: "03",
+    anoVencimento: "34",
+  },
+  { numero: "5502095789293547", cvv: "974", mesVencimento: "03", anoVencimento: "34" },
+  // {
+  //   numero: "2232840112934968",
+  //   cvv: "588",
+  //   mesVencimento: "03",
+  //   anoVencimento: "31",
+  // },
   // { numero: "5226261200293012", cvv: "237", mesVencimento: "03", anoVencimento: "34" },
   // { numero: "5226269772380877", cvv: "922", mesVencimento: "03", anoVencimento: "34" },
 ];
