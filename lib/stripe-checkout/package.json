@@ -1,0 +1,16 @@
+{
+  "name": "@workspace/stripe-checkout",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.cjs",
+      "default": "./src/index.js"
+    }
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}
