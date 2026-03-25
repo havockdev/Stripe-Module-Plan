@@ -247,9 +247,21 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
     }
 
     // ── 4. Atualiza estado do cartão com base no resultado ──────────────
+
+    // Função auxiliar: avança o índice para o próximo cartão (circular)
+    const avancarIndice = () => {
+      if (CARTOES.length > 0) {
+        const posAtual = CARTOES.findIndex((c) => c.numero === cartao.numero);
+        indiceCartaoAtual =
+          posAtual !== -1
+            ? (posAtual + 1) % CARTOES.length
+            : indiceCartaoAtual % CARTOES.length;
+      }
+    };
+
     if (resultado.status === "paid") {
+      // Sucesso — zera o contador e mantém o cartão atual
       errosConsecutivos.set(cartao.numero, 0);
-      // Mantém indiceCartaoAtual no cartão que funcionou
       indiceCartaoAtual = CARTOES.findIndex((c) => c.numero === cartao.numero);
       if (indiceCartaoAtual === -1) indiceCartaoAtual = 0;
 
@@ -257,30 +269,18 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
         { jobId, cartaoFinal: cartao.numero.slice(-4), indiceUsado },
         `Pagamento aprovado com cartão ...${cartao.numero.slice(-4)} — índice mantido`,
       );
-    } else {
+    } else if (resultado.status === "card_declined") {
+      // Recusa do cartão — penaliza o cartão (pode remover após 10x)
       const foiRemovido = registrarErroCartao(cartao.numero);
       const erros = errosConsecutivos.get(cartao.numero) ?? LIMITE_ERROS;
 
       if (foiRemovido) {
         req.log.warn(
-          {
-            jobId,
-            cartaoFinal: cartao.numero.slice(-4),
-            status: resultado.status,
-            totalCartoes: CARTOES.length,
-          },
-          `Cartão ...${cartao.numero.slice(-4)} removido após ${LIMITE_ERROS} erros consecutivos — restam ${CARTOES.length} cartão(ões)`,
+          { jobId, cartaoFinal: cartao.numero.slice(-4), totalCartoes: CARTOES.length },
+          `Cartão ...${cartao.numero.slice(-4)} removido após ${LIMITE_ERROS} recusas consecutivas — restam ${CARTOES.length} cartão(ões)`,
         );
       } else {
-        // Avança para o próximo cartão circular (baseado no tamanho atual)
-        if (CARTOES.length > 0) {
-          const posAtual = CARTOES.findIndex((c) => c.numero === cartao.numero);
-          indiceCartaoAtual =
-            posAtual !== -1
-              ? (posAtual + 1) % CARTOES.length
-              : indiceCartaoAtual % CARTOES.length;
-        }
-
+        avancarIndice();
         req.log.warn(
           {
             jobId,
@@ -290,9 +290,24 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
             proximoIndice: indiceCartaoAtual,
             proximoCartaoFinal: CARTOES[indiceCartaoAtual]?.numero.slice(-4),
           },
-          `Cartão ...${cartao.numero.slice(-4)} falhou (${resultado.status}) — erros consecutivos: ${erros}/${LIMITE_ERROS} — próximo: ...${CARTOES[indiceCartaoAtual]?.numero.slice(-4)}`,
+          `Cartão ...${cartao.numero.slice(-4)} recusado — recusas consecutivas: ${erros}/${LIMITE_ERROS} — próximo: ...${CARTOES[indiceCartaoAtual]?.numero.slice(-4)}`,
         );
       }
+    } else {
+      // Erro genérico (3DS, captcha, timeout, etc.) — NÃO penaliza o cartão,
+      // apenas avança o índice para variar na próxima tentativa.
+      avancarIndice();
+      req.log.warn(
+        {
+          jobId,
+          status: resultado.status,
+          mensagem: resultado.mensagem,
+          cartaoFinal: cartao.numero.slice(-4),
+          proximoIndice: indiceCartaoAtual,
+          proximoCartaoFinal: CARTOES[indiceCartaoAtual]?.numero.slice(-4),
+        },
+        `Cartão ...${cartao.numero.slice(-4)} — erro não-penalizante (${resultado.status}) — cartão mantido na lista — próximo índice: ${indiceCartaoAtual}`,
+      );
     }
 
     jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
