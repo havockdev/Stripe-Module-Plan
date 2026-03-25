@@ -1,0 +1,123 @@
+<?xml version="1.1"?>
+<!-- NOTE: Any NULL bytes in requests and responses are preserved within this output, even though this strictly breaks the XML syntax. If your XML parser rejects the NULL bytes then you will need to remove or replace these bytes before parsing. Alternatively, you can use the option to base64-encode requests and responses. -->
+<!DOCTYPE items [
+<!ELEMENT items (item*)>
+<!ATTLIST items burpVersion CDATA "">
+<!ATTLIST items exportTime CDATA "">
+<!ELEMENT item (time, url, host, port, protocol, method, path, extension, request, status, responselength, mimetype, response, comment)>
+<!ELEMENT time (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT host (#PCDATA)>
+<!ATTLIST host ip CDATA "">
+<!ELEMENT port (#PCDATA)>
+<!ELEMENT protocol (#PCDATA)>
+<!ELEMENT method (#PCDATA)>
+<!ELEMENT path (#PCDATA)>
+<!ELEMENT extension (#PCDATA)>
+<!ELEMENT request (#PCDATA)>
+<!ATTLIST request base64 (true|false) "false">
+<!ELEMENT status (#PCDATA)>
+<!ELEMENT responselength (#PCDATA)>
+<!ELEMENT mimetype (#PCDATA)>
+<!ELEMENT response (#PCDATA)>
+<!ATTLIST response base64 (true|false) "false">
+<!ELEMENT comment (#PCDATA)>
+]>
+<items burpVersion="2026.2.3" exportTime="Tue Mar 24 23:37:24 GMT-03:00 2026">
+  <item>
+    <time>Tue Mar 24 15:02:27 GMT-03:00 2026</time>
+    <url><![CDATA[https://billing.stripe.com/v1/billing_portal/sessions/bps_1TEZDuKvR4zlUMOU6uHSGY2T/subscriptions/sub_1TEYQlKvR4zlUMOUICORWDAb?expand%5B%5D=default_payment_method&expand%5B%5D=default_source&include_only%5B%5D=id%2Cstatus%2Clatest_invoice.id%2Clatest_invoice.status%2Clatest_invoice.payment_intent.id%2Clatest_invoice.payment_intent.status%2Clatest_invoice.payment_intent.client_secret%2Clatest_invoice.payment_intent.next_action.boleto_display_details.expires_at%2Clatest_invoice.payment_intent.next_action.boleto_display_details.hosted_voucher_url%2Clatest_invoice.payment_intent.next_action.boleto_display_details.number%2Clatest_invoice.payment_intent.next_action.boleto_display_details.pdf%2Clatest_invoice.payment_intent.next_action.type%2Cpending_update.subscription_items.id%2Cdefault_payment_method.id%2Cdefault_payment_method.card.exp_month%2Cdefault_payment_method.card.exp_year%2Cdefault_payment_method.card.funding%2Cdefault_payment_method.card.wallet.type%2Cdefault_source.id%2Cdefault_source.exp_year%2Cdefault_source.exp_month%2Cdefault_source.funding%2Cdefault_source.wallet.type%2Cdefault_source.object%2Cdefault_source.card.exp_year%2Cdefault_source.card.exp_month%2Cdefault_source.type%2Cdefault_payment_method.acss_debit.bank_name%2Cdefault_payment_method.acss_debit.last4%2Cdefault_payment_method.au_becs_debit.last4%2Cdefault_payment_method.bacs_debit.last4%2Cdefault_payment_method.boleto.tax_id%2Cdefault_payment_method.crypto.last4%2Cdefault_payment_method.crypto.network%2Cdefault_payment_method.crypto.token_currency%2Cdefault_payment_method.crypto.wallet_address%2Cdefault_payment_method.card.brand%2Cdefault_payment_method.card.last4%2Cdefault_payment_method.card.networks.available%2Cdefault_payment_method.nz_bank_account.bank_name%2Cdefault_payment_method.nz_bank_account.last4%2Cdefault_payment_method.object%2Cdefault_payment_method.sepa_debit.last4%2Cdefault_payment_method.type%2Cdefault_payment_method.us_bank_account.bank_name%2Cdefault_payment_method.us_bank_account.last4%2Cdefault_payment_method.custom.type%2Cdefault_payment_method.custom.display_name%2Cdefault_payment_method.custom.logo_url%2Cdefault_source.status%2Cdefault_source.ach_credit_transfer.bank_name%2Cdefault_source.ach_credit_transfer.account_number%2Cdefault_source.ach_debit.bank_name%2Cdefault_source.ach_debit.last4%2Cdefault_source.acss_debit.bank_name%2Cdefault_source.acss_debit.last4%2Cdefault_source.bacs_debit.last4%2Cdefault_source.au_becs_debit.last4%2Cdefault_source.bitcoin.address%2Cdefault_source.card.brand%2Cdefault_source.card.dynamic_last4%2Cdefault_source.card.last4%2Cdefault_source.card_present.brand%2Cdefault_source.card_present.last4%2Cdefault_source.chf_credit_transfer.participant_number%2Cdefault_source.ideal.iban_last4%2Cdefault_source.interac_present.last4%2Cdefault_source.sepa_debit.last4%2Cdefault_source.sofort.iban_last4%2Cdefault_source.paysecure.dynamic_last4%2Cdefault_source.paysecure.last4%2Cdefault_source.three_d_secure.brand%2Cdefault_source.three_d_secure.dynamic_last4%2Cdefault_source.three_d_secure.last4%2Cdefault_source.three_d_secure_2.brand%2Cdefault_source.three_d_secure_2.dynamic_last4%2Cdefault_source.three_d_secure_2.last4%2Cdefault_source.three_d_secure_2_eap.brand%2Cdefault_source.three_d_secure_2_eap.dynamic_last4%2Cdefault_source.three_d_secure_2_eap.last4%2Cdefault_source.brand%2Cdefault_source.dynamic_last4%2Cdefault_source.last4%2Cdefault_source.benefits.issuer%2Cdefault_source.bank_name%2Cdefault_source.fingerprint%2Cdefault_source.inbound_address]]></url>
+    <host ip="3.229.145.172">billing.stripe.com</host>
+    <port>443</port>
+    <protocol>https</protocol>
+    <method><![CDATA[POST]]></method>
+    <path><![CDATA[/v1/billing_portal/sessions/bps_1TEZDuKvR4zlUMOU6uHSGY2T/subscriptions/sub_1TEYQlKvR4zlUMOUICORWDAb?expand%5B%5D=default_payment_method&expand%5B%5D=default_source&include_only%5B%5D=id%2Cstatus%2Clatest_invoice.id%2Clatest_invoice.status%2Clatest_invoice.payment_intent.id%2Clatest_invoice.payment_intent.status%2Clatest_invoice.payment_intent.client_secret%2Clatest_invoice.payment_intent.next_action.boleto_display_details.expires_at%2Clatest_invoice.payment_intent.next_action.boleto_display_details.hosted_voucher_url%2Clatest_invoice.payment_intent.next_action.boleto_display_details.number%2Clatest_invoice.payment_intent.next_action.boleto_display_details.pdf%2Clatest_invoice.payment_intent.next_action.type%2Cpending_update.subscription_items.id%2Cdefault_payment_method.id%2Cdefault_payment_method.card.exp_month%2Cdefault_payment_method.card.exp_year%2Cdefault_payment_method.card.funding%2Cdefault_payment_method.card.wallet.type%2Cdefault_source.id%2Cdefault_source.exp_year%2Cdefault_source.exp_month%2Cdefault_source.funding%2Cdefault_source.wallet.type%2Cdefault_source.object%2Cdefault_source.card.exp_year%2Cdefault_source.card.exp_month%2Cdefault_source.type%2Cdefault_payment_method.acss_debit.bank_name%2Cdefault_payment_method.acss_debit.last4%2Cdefault_payment_method.au_becs_debit.last4%2Cdefault_payment_method.bacs_debit.last4%2Cdefault_payment_method.boleto.tax_id%2Cdefault_payment_method.crypto.last4%2Cdefault_payment_method.crypto.network%2Cdefault_payment_method.crypto.token_currency%2Cdefault_payment_method.crypto.wallet_address%2Cdefault_payment_method.card.brand%2Cdefault_payment_method.card.last4%2Cdefault_payment_method.card.networks.available%2Cdefault_payment_method.nz_bank_account.bank_name%2Cdefault_payment_method.nz_bank_account.last4%2Cdefault_payment_method.object%2Cdefault_payment_method.sepa_debit.last4%2Cdefault_payment_method.type%2Cdefault_payment_method.us_bank_account.bank_name%2Cdefault_payment_method.us_bank_account.last4%2Cdefault_payment_method.custom.type%2Cdefault_payment_method.custom.display_name%2Cdefault_payment_method.custom.logo_url%2Cdefault_source.status%2Cdefault_source.ach_credit_transfer.bank_name%2Cdefault_source.ach_credit_transfer.account_number%2Cdefault_source.ach_debit.bank_name%2Cdefault_source.ach_debit.last4%2Cdefault_source.acss_debit.bank_name%2Cdefault_source.acss_debit.last4%2Cdefault_source.bacs_debit.last4%2Cdefault_source.au_becs_debit.last4%2Cdefault_source.bitcoin.address%2Cdefault_source.card.brand%2Cdefault_source.card.dynamic_last4%2Cdefault_source.card.last4%2Cdefault_source.card_present.brand%2Cdefault_source.card_present.last4%2Cdefault_source.chf_credit_transfer.participant_number%2Cdefault_source.ideal.iban_last4%2Cdefault_source.interac_present.last4%2Cdefault_source.sepa_debit.last4%2Cdefault_source.sofort.iban_last4%2Cdefault_source.paysecure.dynamic_last4%2Cdefault_source.paysecure.last4%2Cdefault_source.three_d_secure.brand%2Cdefault_source.three_d_secure.dynamic_last4%2Cdefault_source.three_d_secure.last4%2Cdefault_source.three_d_secure_2.brand%2Cdefault_source.three_d_secure_2.dynamic_last4%2Cdefault_source.three_d_secure_2.last4%2Cdefault_source.three_d_secure_2_eap.brand%2Cdefault_source.three_d_secure_2_eap.dynamic_last4%2Cdefault_source.three_d_secure_2_eap.last4%2Cdefault_source.brand%2Cdefault_source.dynamic_last4%2Cdefault_source.last4%2Cdefault_source.benefits.issuer%2Cdefault_source.bank_name%2Cdefault_source.fingerprint%2Cdefault_source.inbound_address]]></path>
+    <extension>null</extension>
+    <request base64="false"><![CDATA[POST /v1/billing_portal/sessions/bps_1TEZDuKvR4zlUMOU6uHSGY2T/subscriptions/sub_1TEYQlKvR4zlUMOUICORWDAb?expand%5B%5D=default_payment_method&expand%5B%5D=default_source&include_only%5B%5D=id%2Cstatus%2Clatest_invoice.id%2Clatest_invoice.status%2Clatest_invoice.payment_intent.id%2Clatest_invoice.payment_intent.status%2Clatest_invoice.payment_intent.client_secret%2Clatest_invoice.payment_intent.next_action.boleto_display_details.expires_at%2Clatest_invoice.payment_intent.next_action.boleto_display_details.hosted_voucher_url%2Clatest_invoice.payment_intent.next_action.boleto_display_details.number%2Clatest_invoice.payment_intent.next_action.boleto_display_details.pdf%2Clatest_invoice.payment_intent.next_action.type%2Cpending_update.subscription_items.id%2Cdefault_payment_method.id%2Cdefault_payment_method.card.exp_month%2Cdefault_payment_method.card.exp_year%2Cdefault_payment_method.card.funding%2Cdefault_payment_method.card.wallet.type%2Cdefault_source.id%2Cdefault_source.exp_year%2Cdefault_source.exp_month%2Cdefault_source.funding%2Cdefault_source.wallet.type%2Cdefault_source.object%2Cdefault_source.card.exp_year%2Cdefault_source.card.exp_month%2Cdefault_source.type%2Cdefault_payment_method.acss_debit.bank_name%2Cdefault_payment_method.acss_debit.last4%2Cdefault_payment_method.au_becs_debit.last4%2Cdefault_payment_method.bacs_debit.last4%2Cdefault_payment_method.boleto.tax_id%2Cdefault_payment_method.crypto.last4%2Cdefault_payment_method.crypto.network%2Cdefault_payment_method.crypto.token_currency%2Cdefault_payment_method.crypto.wallet_address%2Cdefault_payment_method.card.brand%2Cdefault_payment_method.card.last4%2Cdefault_payment_method.card.networks.available%2Cdefault_payment_method.nz_bank_account.bank_name%2Cdefault_payment_method.nz_bank_account.last4%2Cdefault_payment_method.object%2Cdefault_payment_method.sepa_debit.last4%2Cdefault_payment_method.type%2Cdefault_payment_method.us_bank_account.bank_name%2Cdefault_payment_method.us_bank_account.last4%2Cdefault_payment_method.custom.type%2Cdefault_payment_method.custom.display_name%2Cdefault_payment_method.custom.logo_url%2Cdefault_source.status%2Cdefault_source.ach_credit_transfer.bank_name%2Cdefault_source.ach_credit_transfer.account_number%2Cdefault_source.ach_debit.bank_name%2Cdefault_source.ach_debit.last4%2Cdefault_source.acss_debit.bank_name%2Cdefault_source.acss_debit.last4%2Cdefault_source.bacs_debit.last4%2Cdefault_source.au_becs_debit.last4%2Cdefault_source.bitcoin.address%2Cdefault_source.card.brand%2Cdefault_source.card.dynamic_last4%2Cdefault_source.card.last4%2Cdefault_source.card_present.brand%2Cdefault_source.card_present.last4%2Cdefault_source.chf_credit_transfer.participant_number%2Cdefault_source.ideal.iban_last4%2Cdefault_source.interac_present.last4%2Cdefault_source.sepa_debit.last4%2Cdefault_source.sofort.iban_last4%2Cdefault_source.paysecure.dynamic_last4%2Cdefault_source.paysecure.last4%2Cdefault_source.three_d_secure.brand%2Cdefault_source.three_d_secure.dynamic_last4%2Cdefault_source.three_d_secure.last4%2Cdefault_source.three_d_secure_2.brand%2Cdefault_source.three_d_secure_2.dynamic_last4%2Cdefault_source.three_d_secure_2.last4%2Cdefault_source.three_d_secure_2_eap.brand%2Cdefault_source.three_d_secure_2_eap.dynamic_last4%2Cdefault_source.three_d_secure_2_eap.last4%2Cdefault_source.brand%2Cdefault_source.dynamic_last4%2Cdefault_source.last4%2Cdefault_source.benefits.issuer%2Cdefault_source.bank_name%2Cdefault_source.fingerprint%2Cdefault_source.inbound_address HTTP/2
+Host: billing.stripe.com
+Cookie: __stripe_mid=3ed6a8f3-f213-4a5a-9f2d-f3ea7cb369d7edd505; __stripe_sid=5fb61f32-b912-43b4-9165-4cd2a9cd049921e732
+Content-Length: 152
+Sec-Ch-Ua-Platform: "Windows"
+Authorization: Bearer ek_live_YWNjdF8xTnU1bVVLdlI0emxVTU9VLFdBN0hGS0dqNHM5Z2J5YzZkU1JCck9QVHdnaTAzcE0_007IlqkoHc
+Sec-Ch-Ua: "Chromium";v="145", "Not:A-Brand";v="99"
+Stripe-Version: 2025-06-30.basil
+Sec-Ch-Ua-Mobile: ?0
+X-Requested-With: XMLHttpRequest
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+X-Stripe-Manage-Client-Revision: 41c4840461dfc344c96c61ec5e3c4b45e8f3d93d
+X-Stripe-Csrf-Token: fake-deprecated-token
+Stripe-Account: acct_1Nu5mUKvR4zlUMOU
+Accept-Language: pt-BR
+X-Request-Source: service="customer_portal"; project="customer_portal"; operation="PreviewPageBodyUpdateSubscriptionStateMutation"; component="PreviewPageBody"; load_id="d758f611-e22d-4e50-b5e2-1365900bb3fc"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36
+Stripe-Livemode: true
+Browser-Language: pt-BR
+Origin: https://billing.stripe.com
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://billing.stripe.com/p/session/live_YWNjdF8xTnU1bVVLdlI0emxVTU9VLF9VQ3pDSTc4eG5NaXMwV2lXUlhPb09JS25sVkNBSlJY0100XT7KfrtH/subscriptions/sub_1TEYQlKvR4zlUMOUICORWDAb/preview/price_1SfJHYKvR4zlUMOUN4ABuaB4?in_flow=true&quantity=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+recurring_items%5B0%5D%5Bid%5D=si_UCyNU3qSBkksJY&recurring_items%5B0%5D%5Bquantity%5D=1&recurring_items%5B0%5D%5Bprice%5D=price_1SfJHYKvR4zlUMOUN4ABuaB4]]></request>
+    <status>200</status>
+    <responselength>1876</responselength>
+    <mimetype>JSON</mimetype>
+    <response base64="false"><![CDATA[HTTP/2 200 OK
+Server: nginx
+Date: Tue, 24 Mar 2026 18:02:36 GMT
+Content-Type: application/json
+Content-Length: 612
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: GET, HEAD, PUT, PATCH, POST, DELETE
+Access-Control-Allow-Origin: https://billing.stripe.com
+Access-Control-Expose-Headers: Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+Access-Control-Max-Age: 300
+Cache-Control: no-cache, no-store
+Content-Security-Policy: base-uri 'none'; default-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'; worker-src 'none'; upgrade-insecure-requests; report-uri https://q.stripe.com/csp-violation?q=tzU9S5sf72buE9G10PdsWbtpwSgbzgh2hxGXU3f_2UD8_S8LMiPluGJQs9tTK-fLViM5hS-LZSLp5DFW
+Idempotency-Key: b86cb06f-4717-44c9-9c12-70b6bda0cdb8
+Original-Request: req_adKOeVABDklarM
+Request-Id: req_adKOeVABDklarM
+Stripe-Should-Retry: false
+Stripe-Version: 2025-06-30.basil
+Timing-Allow-Origin: https://billing.stripe.com
+Vary: Origin
+X-Stripe-Priority-Routing-Enabled: true
+X-Stripe-Routing-Context-Priority-Tier: livemode
+X-Wc: ABGHIJ
+Referrer-Policy: strict-origin-when-cross-origin
+
+{
+  "id": "sub_1TEYQlKvR4zlUMOUICORWDAb",
+  "default_payment_method": {
+    "id": "pm_1TEYQgKvR4zlUMOU5SReXCBA",
+    "object": "payment_method",
+    "card": {
+      "brand": "mastercard",
+      "exp_month": 5,
+      "exp_year": 2030,
+      "funding": "credit",
+      "last4": "9890",
+      "networks": {
+        "available": [
+          "mastercard"
+        ]
+      },
+      "wallet": null
+    },
+    "type": "card"
+  },
+  "default_source": null,
+  "latest_invoice": {
+    "id": "in_1TEZHiKvR4zlUMOUWKaYgheA",
+    "payment_intent": null,
+    "status": "paid"
+  },
+  "pending_update": null,
+  "status": "active"
+}]]></response>
+    <comment></comment>
+  </item>
+</items>
