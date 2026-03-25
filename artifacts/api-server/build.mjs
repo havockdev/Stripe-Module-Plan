@@ -98,7 +98,6 @@ async function buildAll() {
       "zeromq-prebuilt",
       "playwright",
       "puppeteer",
-      "@workspace/stripe-checkout",
       "puppeteer-core",
       "electron",
     ],
