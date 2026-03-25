@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "4vTecbvsO3e-4y8b1bNDA"
+uri = "file://GUIA.md"
+type = "text"
+title = "Guia de Uso — Stripe Billing Bot"
