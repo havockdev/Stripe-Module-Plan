@@ -35,6 +35,16 @@ router.post("/stripe/step2", async (req: Request, res: Response) => {
     return;
   }
 
+  if (!step1.authorization) {
+    res.status(400).json({ error: "Step 1 result is missing authorization token" });
+    return;
+  }
+
+  if (!step1.stripeAccount) {
+    res.status(400).json({ error: "Step 1 result is missing stripeAccount" });
+    return;
+  }
+
   try {
     const result = await step2GetPortalSession(step1);
     res.json(result);
