@@ -10,4 +10,10 @@ export type {
   Step2Configuration,
   Step2Branding,
 } from "./step2";
+export { step3UpdateSubscription } from "./step3";
+export type {
+  Step3Result,
+  Step3Invoice,
+  Step3PaymentMethod,
+} from "./step3";
 export { BROWSER_HEADERS_STEP1 } from "./headers";
