@@ -37,11 +37,14 @@ const DADOS_BASE = {
 // Números dos cartões atualmente com um job em execução (mutex por cartão)
 const cartoesBloqueados = new Set<string>();
 
-// Contagem de erros consecutivos por número de cartão
+// Contagem de recusas consecutivas por número de cartão (só card_declined conta)
 const errosConsecutivos = new Map<string, number>();
 
-// Limite de erros consecutivos antes de remover o cartão
+// Limite de recusas consecutivas antes de remover o cartão
 const LIMITE_ERROS = 10;
+
+// Duração do cooldown para jobs com 3DS (ms)
+const COOLDOWN_3DS_MS = 10 * 60 * 1000;
 
 // Índice preferido para a próxima escolha de cartão (circular)
 let indiceCartaoAtual = 0;
@@ -82,7 +85,7 @@ async function aguardarETravarCartao(
 }
 
 /**
- * Registra um erro consecutivo para o cartão. Remove o cartão da lista se
+ * Registra uma recusa consecutiva para o cartão. Remove o cartão da lista se
  * atingir o limite. Retorna true se o cartão foi removido.
  */
 function registrarErroCartao(numero: string): boolean {
@@ -109,12 +112,14 @@ function registrarErroCartao(numero: string): boolean {
 
 // ─── Jobs ─────────────────────────────────────────────────────────────────────
 
-type StatusJob = "processando" | "concluido";
+type StatusJob = "processando" | "cooldown" | "concluido";
 
 interface Job {
   status: StatusJob;
   resultado: ResultadoPagamento | null;
   criadoEm: number;
+  /** Timestamp Unix ms até quando o job fica em cooldown (só em status "cooldown") */
+  cooldownAte?: number;
 }
 
 // Armazena os jobs em memória (TTL implícito via limpeza periódica)
@@ -140,9 +145,9 @@ setInterval(
  * Comportamento do cartão:
  *  - Usa o cartão preferido (indiceCartaoAtual); se estiver ocupado, aguarda ou usa outro livre.
  *  - Máximo 1 job por cartão ao mesmo tempo (mutex).
- *  - Sucesso: mantém o cartão atual e zera o contador de erros.
- *  - Falha: avança para o próximo cartão e incrementa o contador de erros.
- *  - 10 erros consecutivos: remove o cartão da lista permanentemente.
+ *  - Sucesso: mantém o cartão atual e zera o contador de recusas.
+ *  - card_declined: penaliza o cartão (remove após 10 recusas consecutivas).
+ *  - error (3DS, captcha, etc.): não penaliza o cartão; se for 3DS entra em cooldown.
  *
  * Body: { link: string }
  */
@@ -172,7 +177,7 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
       sucesso: false,
       status: "error",
       mensagem:
-        "Nenhum cartão disponível — todos foram removidos por excesso de erros",
+        "Nenhum cartão disponível — todos foram removidos por excesso de recusas",
     });
     return;
   }
@@ -209,7 +214,7 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
           sucesso: false,
           status: "error",
           mensagem:
-            "Nenhum cartão disponível — todos foram removidos por excesso de erros",
+            "Nenhum cartão disponível — todos foram removidos por excesso de recusas",
         },
         criadoEm: Date.now(),
       });
@@ -269,6 +274,8 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
         { jobId, cartaoFinal: cartao.numero.slice(-4), indiceUsado },
         `Pagamento aprovado com cartão ...${cartao.numero.slice(-4)} — índice mantido`,
       );
+      jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
+
     } else if (resultado.status === "card_declined") {
       // Recusa do cartão — penaliza o cartão (pode remover após 10x)
       const foiRemovido = registrarErroCartao(cartao.numero);
@@ -293,27 +300,50 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
           `Cartão ...${cartao.numero.slice(-4)} recusado — recusas consecutivas: ${erros}/${LIMITE_ERROS} — próximo: ...${CARTOES[indiceCartaoAtual]?.numero.slice(-4)}`,
         );
       }
+      jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
+
     } else {
-      // Erro genérico (3DS, captcha, timeout, etc.) — NÃO penaliza o cartão,
-      // apenas avança o índice para variar na próxima tentativa.
+      // Erro genérico — NÃO penaliza o cartão, apenas avança o índice.
       avancarIndice();
-      req.log.warn(
-        {
-          jobId,
-          status: resultado.status,
-          mensagem: resultado.mensagem,
-          cartaoFinal: cartao.numero.slice(-4),
-          proximoIndice: indiceCartaoAtual,
-          proximoCartaoFinal: CARTOES[indiceCartaoAtual]?.numero.slice(-4),
-        },
-        `Cartão ...${cartao.numero.slice(-4)} — erro não-penalizante (${resultado.status}) — cartão mantido na lista — próximo índice: ${indiceCartaoAtual}`,
-      );
+
+      // ── Detecção de 3DS: entra em cooldown de 10 min ──────────────────
+      const e3DS = resultado.mensagem?.includes("3DS");
+      if (e3DS) {
+        const cooldownAte = Date.now() + COOLDOWN_3DS_MS;
+        req.log.warn(
+          {
+            jobId,
+            cartaoFinal: cartao.numero.slice(-4),
+            cooldownAte: new Date(cooldownAte).toISOString(),
+            duracaoMin: COOLDOWN_3DS_MS / 60000,
+          },
+          `Job em cooldown de ${COOLDOWN_3DS_MS / 60000} minutos — conta exige 3DS`,
+        );
+        jobs.set(jobId, {
+          status: "cooldown",
+          resultado,
+          criadoEm: Date.now(),
+          cooldownAte,
+        });
+      } else {
+        req.log.warn(
+          {
+            jobId,
+            status: resultado.status,
+            mensagem: resultado.mensagem,
+            cartaoFinal: cartao.numero.slice(-4),
+            proximoIndice: indiceCartaoAtual,
+            proximoCartaoFinal: CARTOES[indiceCartaoAtual]?.numero.slice(-4),
+          },
+          `Cartão ...${cartao.numero.slice(-4)} — erro não-penalizante (${resultado.status}) — próximo índice: ${indiceCartaoAtual}`,
+        );
+        jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
+      }
     }
 
-    jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
     req.log.info(
-      { jobId, status: resultado.status },
-      "Job de checkout concluído",
+      { jobId, statusJob: jobs.get(jobId)?.status, statusResultado: resultado.status },
+      "Job de checkout finalizado",
     );
   })();
 });
@@ -321,9 +351,12 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
 /**
  * GET /api/checkout/status/:jobId
  * Consulta o resultado de um job de checkout.
- * Enquanto estiver processando: { status: "processando" }
- * Quando concluído: { status: "concluido", resultado: { sucesso, status, mensagem } }
- * Job não encontrado: 404
+ *
+ * Respostas possíveis:
+ *  - { status: "processando" }                                  — automação ainda rodando
+ *  - { status: "cooldown", aguardar: N }                        — 3DS detectado, aguardar N segundos
+ *  - { status: "concluido", resultado: { sucesso, status, mensagem } } — finalizado
+ *  - 404 se o job não existir ou tiver expirado
  */
 router.get("/checkout/status/:jobId", (req: Request, res: Response) => {
   const { jobId } = req.params;
@@ -341,6 +374,23 @@ router.get("/checkout/status/:jobId", (req: Request, res: Response) => {
   if (job.status === "processando") {
     res.json({ status: "processando" });
     return;
+  }
+
+  if (job.status === "cooldown") {
+    const agora = Date.now();
+    if (agora < job.cooldownAte!) {
+      const aguardar = Math.ceil((job.cooldownAte! - agora) / 1000);
+      req.log.info(
+        { jobId, aguardar },
+        `Job em cooldown — ${aguardar}s restantes`,
+      );
+      res.json({ status: "cooldown", aguardar });
+      return;
+    }
+    // Cooldown expirado — transiciona para concluido
+    job.status = "concluido";
+    jobs.set(jobId, job);
+    req.log.info({ jobId }, "Cooldown expirado — job transicionado para concluido");
   }
 
   res.json({ status: "concluido", resultado: job.resultado });
