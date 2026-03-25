@@ -139,10 +139,8 @@ export class AutomacaoCheckout {
 
     this.pagina = await this.contexto.newPage();
 
-    // Intercepta requisições para capturar guid e checkoutConfigId do Stripe.js.
-    // O muid NÃO é capturado do interceptor — o valor fixo do construtor tem prioridade,
-    // pois é um identificador de dispositivo real reconhecido pelo Stripe como confiável.
-    // O sid é capturado do cookie __stripe_sid em extrairDadosSessao(), não aqui.
+    // Intercepta requisições para capturar os identificadores de rastreamento do Stripe.js
+    // O Stripe.js envia guid, muid e sid para api.stripe.com e r.stripe.com antes de qualquer ação do usuário.
     this.pagina.on('request', (requisicao) => {
       const url = requisicao.url();
       if (url.includes('api.stripe.com') || url.includes('r.stripe.com')) {
@@ -151,6 +149,8 @@ export class AutomacaoCheckout {
           try {
             const parametros = new URLSearchParams(dadosPost);
             if (parametros.has('guid')) this.dadosStripe.guid = parametros.get('guid');
+            // if (parametros.has('muid')) this.dadosStripe.muid = parametros.get('muid');
+            if (parametros.has('sid')) this.dadosStripe.sid = parametros.get('sid');
 
             if (parametros.has('events')) {
               const eventos = JSON.parse(parametros.get('events'));
@@ -249,27 +249,10 @@ export class AutomacaoCheckout {
     // Coleta todos os cookies da sessão do browser (necessários para confirmar o pagamento)
     this.dadosStripe.cookies = await this.contexto.cookies();
 
-    // Extrai muid e sid dos cookies definidos pelo Stripe.js:
-    //   __stripe_mid → muid (machine unique ID)
-    //   __stripe_sid → sid (session ID)
-    //
-    // Lógica do muid:
-    //   - Se o cookie __stripe_mid existir, usa esse valor — é o muid real que o Stripe associou
-    //     ao browser desta sessão. Enviar o muid do cookie é OBRIGATÓRIO para consistência:
-    //     o Stripe valida que o muid na chamada de API bate com o cookie da sessão.
-    //   - Se o cookie não existir (resistFingerprinting bloqueou o Stripe.js de setar o cookie),
-    //     usa o valor hardcoded '24F6C9D492896DCB0398DF62939D6C4A', que é um identificador de
-    //     dispositivo real reconhecido pelo Stripe como confiável.
-    const cookieMid = this.dadosStripe.cookies.find((c) => c.name === '__stripe_mid');
+    // Extrai sid diretamente do cookie __stripe_sid definido pelo Stripe.js.
+    // O muid NÃO é sobrescrito pelo cookie — o valor fixo do construtor é mantido,
+    // pois é um identificador de dispositivo reconhecido pelo Stripe como confiável.
     const cookieSid = this.dadosStripe.cookies.find((c) => c.name === '__stripe_sid');
-
-    if (cookieMid) {
-      this.dadosStripe.muid = cookieMid.value;
-      registrar(`MUID extraído do cookie __stripe_mid: ${this.dadosStripe.muid.substring(0, 8)}...`, 'success');
-    } else {
-      registrar(`MUID: usando valor fixo (cookie __stripe_mid ausente): ${this.dadosStripe.muid.substring(0, 8)}...`, 'info');
-    }
-
     if (cookieSid) {
       this.dadosStripe.sid = cookieSid.value;
       registrar(`SID extraído do cookie __stripe_sid: ${this.dadosStripe.sid.substring(0, 8)}...`, 'success');
