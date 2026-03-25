@@ -1,0 +1,199 @@
+/**
+ * SCRIPT DE FARM - ADICIONANDO CRÉDITOS (V4_CA)
+ * Objetivo: Pegar contas, realizar o ciclo de upgrade/downgrade 25 vezes e monitorar saldo de créditos.
+ */
+
+const { Pool } = require('pg');
+const LovableAPI = require('./APIs/Lovable');
+const apiCheckout = require('./APIs/StripeCheckout/index'); // Simulando a lib de pagamento/checkout
+const apiStripe = require('./APIs/StripePlan/index');   // Simulando a lib de mudança de plano
+const fs = require('fs');
+
+// --- CONFIGURAÇÃO DO BANCO ---
+const pool = new Pool({
+    connectionString: "postgresql://farm_bot:SUA_SENHA_FORTE@localhost:5432/farm_db",
+    ssl: false,
+    idleTimeoutMillis: 30000
+});
+
+const DADOS_PAGAMENTO = {
+    "codigos": ["SYMPOSIUMPC20"],
+    "cartao": {
+        "numero": "5226 2612 0029 3012",
+        "cvv": "237",
+        "mesVencimento": "03",
+        "anoVencimento": "34"
+    },
+    "endereco": {
+        "nome": "JAIRO PIRES SILVA",
+        "email": "joaodeprelian@gmail.com",
+        "pais": "BR",
+        "rua": "Rua Assef Buainain",
+        "cidade": "Campo Grande",
+        "estado": "MS",
+        "cep": "79042-470"
+    }
+}
+
+async function iniciarFarmCreditos() {
+    const client = await pool.connect();
+
+    try {
+        console.log("🚀 Iniciando busca de contas para 'adicionando_creditos'...");
+
+        // 1. Pega uma conta disponível (usando sua lógica de base)
+        const resConta = await client.query(`
+            SELECT * FROM contas_farm 
+            WHERE status = 'pronta_v4' 
+            LIMIT 1
+        `);
+
+        if (resConta.rows.length === 0) {
+            console.log("📭 Nenhuma conta encontrada para processar.");
+            return;
+        }
+
+        let conta = resConta.rows[0];
+        const proxyStr = ""; // Pega a proxy da conta ou global
+
+        // 2. Marca a conta como "adicionando_creditos"
+        await client.query("UPDATE contas_farm SET status = 'adicionando_creditos' WHERE id = $1", [conta.id]);
+
+        console.log(`\x1b[36m[SISTEMA] Processando conta: ${conta.email}\x1b[0m`);
+
+        // 3. Autenticação inicial
+        let Token = '';
+        let login = await LovableAPI.login(proxyStr, conta.email, conta.senha);
+        console.log(login)
+
+        if (login.status) {
+            Token = login.dados.idToken;
+            console.log("✅ Token obtido com sucesso.");
+        } else {
+            console.log(`❌ Falha no login da conta ${conta.email}. Abortando.`);
+            await client.query("UPDATE contas_farm SET status = 'erro_login' WHERE id = $1", [conta.id]);
+            return;
+        }
+
+        // --- INÍCIO DO CICLO DE 25 VEZES ---
+        for (let i = 1; i <= 25; i++) {
+            console.log(`\n🔄 [CICLO ${i}/25] Iniciando processamento...`);
+
+            try {
+                // A. Listar Workspaces para pegar o Owner
+                const workspacesRes = await LovableAPI.listarWorkspaces(proxyStr, Token);
+                if (!workspacesRes.status || !workspacesRes.dados) {
+                    throw new Error("Falha ao listar workspaces");
+                }
+
+                let workspaceOwner = workspacesRes.dados.find(wp => wp.membership.role === 'owner');
+
+                if (!workspaceOwner) {
+                    console.log("❌ Nenhum workspace OWNER encontrado. Pulando ciclo.");
+                    throw new Error("Workspace owner não encontrado");
+                }
+
+                // B. Consultar Créditos ANTES de cada ação
+                let saldoRes = await LovableAPI.getSaldoCreditos(proxyStr, Token, workspaceOwner.id);
+
+                if (saldoRes.status) {
+                    const totalG = saldoRes.dados.total_granted;
+                    console.log(`💰 Créditos Atuais (Total Granted): ${totalG}`);
+
+                    // Atualiza no banco o campo creditos_gerados
+                    await client.query("UPDATE contas_farm SET creditos_gerados = $1 WHERE id = $2", [totalG, conta.id]);
+
+                    // Se já atingiu 200, podemos encerrar o loop antecipadamente
+                    if (totalG >= 200) {
+                        console.log("🎯 Meta de 200 créditos atingida. Finalizando ciclos.");
+                        break;
+                    }
+                }
+
+                // C. Lógica de Upgrade/Downgrade de Plano
+                let Plan = '';
+                console.log(`Plano atual no Lovable: ${workspaceOwner.plan}`);
+
+                if (workspaceOwner.plan == "free" || workspaceOwner.plan == "ktlo_2") {
+                    console.log("⬆️ Solicitando upgrade para monthly_pro_20...");
+                    Plan = await LovableAPI.gerarCheckout(proxyStr, Token, workspaceOwner.id, 'monthly_pro_20');
+                } else {
+                    console.log("⬇️ Solicitando downgrade para ktlo_2...");
+                    Plan = await LovableAPI.gerarCheckout(proxyStr, Token, workspaceOwner.id, 'ktlo_2');
+                }
+
+                // D. Executar o pagamento/mudança no Stripe
+                let resultadoPagamento;
+                if (workspaceOwner.plan == "free") {
+                    const BASE_URL = "https://48364d9b-d19c-4855-9624-6841c7883051-00-16oxodrmvikt9.spock.replit.dev/api";
+
+                    const respostaJob = await fetch(
+                        `${BASE_URL}/checkout/processar`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ link: Plan.dados.checkoutUrl })
+                        }
+                    );
+                    const { jobId } = await respostaJob.json();
+                    console.log(`[CHECKOUT] Job iniciado: ${jobId}`);
+
+                    while (true) {
+                        await new Promise(resolve => setTimeout(resolve, 5000));
+                        const respostaStatus = await fetch(`${BASE_URL}/checkout/status/${jobId}`);
+                        const dadosStatus = await respostaStatus.json();
+                        console.log(`[CHECKOUT] Status do job: ${dadosStatus.status}`);
+                        if (dadosStatus.status === "concluido") {
+                            resultadoPagamento = dadosStatus.resultado;
+                            break;
+                        }
+                    }
+                } else {
+                    resultadoPagamento = await apiStripe.mudarPlano(Plan.dados.checkoutUrl);
+                }
+
+                console.log(resultadoPagamento)
+
+                console.log(`✅ Resultado do ciclo ${i}:`, (resultadoPagamento?.status || resultadoPagamento?.etapa3?.status) ? "SUCESSO" : "FALHA");
+
+            } catch (error) {
+                console.error(`⚠️ Erro no ciclo ${i}: ${error.message}`);
+                // Em caso de erro, esperamos o intervalo de erro definido
+                const tempoErro = Math.floor(Math.random() * (5000 - 1500 + 1) + 1500);
+                console.log(`Aguardando ${tempoErro / 1000}s devido ao erro antes de tentar próximo ciclo...`);
+                await new Promise(resolve => setTimeout(resolve, tempoErro));
+                continue; // Vai para o próximo i
+            }
+
+            // E. Intervalo normal entre ciclos (5 a 10 segundos) conforme pedido no prompt anterior 
+            // ou (1.5 a 5s) conforme a última instrução de erro aplicada aqui para fluidez
+            if (i < 25) {
+                const tempoEspera = Math.floor(Math.random() * (5000 - 1500 + 1) + 1500);
+                console.log(`Aguardando ${tempoEspera / 1000}s para o próximo ciclo...`);
+                await new Promise(resolve => setTimeout(resolve, tempoEspera));
+            }
+        }
+
+        // 4. Finalização com sucesso total
+        console.log(`\n✨ Processo finalizado para ${conta.email}`);
+        await client.query("UPDATE contas_farm SET status = 'pronta_v4_ca' WHERE id = $1", [conta.id]);
+
+    } catch (err) {
+        console.error('\x1b[31m[ERRO CRÍTICO NO SCRIPT]:\x1b[0m', err.message);
+    } finally {
+        client.release();
+    }
+}
+
+// Execução
+// Execução em loop contínuo
+(async () => {
+    while (true) {
+        await iniciarFarmCreditos();
+        const tempoEntrContas = Math.floor(Math.random() * (5000 - 2000 + 1) + 2000);
+        console.log(`\n⏳ Aguardando ${tempoEntrContas / 1000}s antes de buscar próxima conta...`);
+        await new Promise(resolve => setTimeout(resolve, tempoEntrContas));
+    }
+})();
