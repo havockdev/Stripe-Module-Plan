@@ -4,14 +4,15 @@ import type { OpcoesPagamento, ResultadoPagamento } from "@workspace/stripe-chec
 
 const router: IRouter = Router();
 
-const DADOS_PAGAMENTO: OpcoesPagamento = {
+// Lista de cartões — tenta em ordem até um funcionar.
+// Adicione novos cartões aqui conforme necessário.
+const CARTOES: OpcoesPagamento["cartao"][] = [
+  { numero: "5226261200293012", cvv: "237", mesVencimento: "03", anoVencimento: "34" },
+  { numero: "5226269772380877", cvv: "922", mesVencimento: "03", anoVencimento: "34" },
+];
+
+const DADOS_BASE = {
   codigos: ["SYMPOSIUMPC20"],
-  cartao: {
-    numero: "5226261200293012",
-    cvv: "237",
-    mesVencimento: "03",
-    anoVencimento: "34",
-  },
   endereco: {
     nome: "JAIRO PIRES SILVA",
     email: "joaodeprelian@gmail.com",
@@ -45,6 +46,7 @@ setInterval(() => {
 /**
  * POST /api/checkout/processar
  * Inicia o processamento de pagamento em segundo plano e retorna um jobId imediatamente.
+ * Tenta cada cartão da lista em ordem até obter status 'paid'.
  * Body: { link: string }
  */
 router.post("/checkout/processar", async (req: Request, res: Response) => {
@@ -77,7 +79,38 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
   (async () => {
     try {
       const { processarPagamento } = await import("@workspace/stripe-checkout");
-      const resultado = await processarPagamento(link, DADOS_PAGAMENTO);
+
+      let resultado: ResultadoPagamento = {
+        sucesso: false,
+        status: "error",
+        mensagem: "Nenhum cartão disponível para processar.",
+      };
+
+      for (let i = 0; i < CARTOES.length; i++) {
+        const cartao = CARTOES[i];
+        const tentativa = i + 1;
+
+        req.log.info(
+          { jobId, tentativa, totalCartoes: CARTOES.length, cartaoFinal: cartao.numero.slice(-4) },
+          `Tentando cartão ${tentativa}/${CARTOES.length} (final: ...${cartao.numero.slice(-4)})`
+        );
+
+        resultado = await processarPagamento(link, { ...DADOS_BASE, cartao });
+
+        if (resultado.status === "paid") {
+          req.log.info(
+            { jobId, tentativa, cartaoFinal: cartao.numero.slice(-4) },
+            `Pagamento aprovado com cartão ${tentativa} (...${cartao.numero.slice(-4)})`
+          );
+          break;
+        }
+
+        req.log.warn(
+          { jobId, tentativa, status: resultado.status, mensagem: resultado.mensagem },
+          `Cartão ${tentativa} falhou (${resultado.status}) — tentando próximo...`
+        );
+      }
+
       jobs.set(jobId, { status: "concluido", resultado, criadoEm: Date.now() });
       req.log.info({ jobId, status: resultado.status }, "Job de checkout concluído");
     } catch (err) {
