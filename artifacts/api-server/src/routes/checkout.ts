@@ -8,7 +8,7 @@ import type {
 const router: IRouter = Router();
 
 // Lista de cartões — adicione novos conforme necessário.
-const CARTOES: OpcoesPagamento["cartao"][] = [
+const CARTOES: OpcoesPagamento["cartao"][] = [screenshots
   {
     numero: "5502095789293547",
     cvv: "979",
