@@ -17,7 +17,7 @@ function post(caminho, dados) {
   return new Promise((resolve, reject) => {
     const corpo = JSON.stringify(dados);
     const opcoes = {
-      hostname: 'api.ezcaptcha.com',
+      hostname: 'api.ez-captcha.com',
       port: 443,
       path: caminho,
       method: 'POST',
