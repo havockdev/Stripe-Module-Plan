@@ -171,10 +171,10 @@ setInterval(
  *  - card_declined: penaliza o cartão (remove após 10 recusas consecutivas).
  *  - error (3DS, captcha, etc.): não penaliza o cartão; se for 3DS entra em cooldown.
  *
- * Body: { link: string }
+ * Body: { link: string, cupom?: string }
  */
 router.post("/checkout/processar", async (req: Request, res: Response) => {
-  const { link } = req.body as { link?: string };
+  const { link, cupom } = req.body as { link?: string; cupom?: string };
 
   if (!link || typeof link !== "string") {
     res.status(400).json({
@@ -260,7 +260,11 @@ router.post("/checkout/processar", async (req: Request, res: Response) => {
 
     try {
       const { processarPagamento } = await import("@workspace/stripe-checkout");
-      resultado = await processarPagamento(link, { ...DADOS_BASE, cartao });
+      const codigos = cupom && typeof cupom === "string" && cupom.trim()
+        ? [cupom.trim()]
+        : DADOS_BASE.codigos;
+      req.log.info({ jobId, codigos }, "Cupons a tentar");
+      resultado = await processarPagamento(link, { ...DADOS_BASE, codigos, cartao });
     } catch (err) {
       const mensagem = err instanceof Error ? err.message : String(err);
       req.log.error(
