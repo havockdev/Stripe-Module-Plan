@@ -1,0 +1,72 @@
+const axios = require('axios');
+
+const API_KEY = "bdef81d97b09d61aaefb79f8794bcd11";
+const SITE_KEY = "0x4AAAAAAChnKAZBY0iFpFHC";
+const PAGE_URL = "https://lovable.dev/signup";
+
+const CaptchaService = {
+    /**
+     * Resolve o Cloudflare Turnstile usando Proxy
+     * @param {string} proxyString Formato "host:port:user:pass"
+     */
+    resolverTurnstile: async (proxyString) => {
+        try {
+            const [pHost, pPort, pUser, pPass] = proxyString.split(':');
+
+            // 1. Criar a Tarefa
+            const payloadCriacao = {
+            "key": API_KEY,
+            "method": "turnstile",
+            "sitekey": SITE_KEY,
+            "pageurl": PAGE_URL,
+            "action": "signup_email_password",
+            "json": 1
+            }
+
+            const resCriacao = await axios.post('https://2captcha.com/in.php', payloadCriacao);
+
+            if (resCriacao.data.errorId > 0) {
+                throw new Error(`Erro 2Captcha (Criação): ${resCriacao.data.errorDescription}`);
+            }
+
+            const taskId = resCriacao.data.request;
+            console.log(`[2Captcha] Tarefa criada: ${taskId}. Aguardando solução...`);
+
+            // 2. Loop de verificação (Polling)
+            let tentativas = 0;
+            while (tentativas < 30) { // Timeout de ~2 minutos
+                await new Promise(r => setTimeout(r, 5000)); // Espera 5s entre checagens
+
+                const resSolucao = await axios.post('https://api.2captcha.com/getTaskResult', {
+                    clientKey: API_KEY,
+                    taskId: taskId
+                });
+
+                // console.log(resSolucao)
+
+                if (resSolucao.data.errorId > 0) {
+                    throw new Error(`Erro 2Captcha (Resultado): ${resSolucao.data.errorDescription}`);
+                }
+
+                if (resSolucao.data.status === "ready") {
+                    console.log(`[2Captcha] Captcha resolvido com sucesso!`);
+                    return {
+                        status: true,
+                        token: resSolucao.data.solution.token
+                    };
+                }
+
+                tentativas++;
+                process.stdout.write("."); // Indicador visual de progresso
+            }
+
+            throw new Error("Timeout ao resolver captcha");
+
+        } catch (erro) {
+            console.error(`\n[2Captcha] Erro: ${erro.message}`);
+            return { status: false, msg: erro.message };
+        }
+    }
+};
+
+module.exports = CaptchaService;
